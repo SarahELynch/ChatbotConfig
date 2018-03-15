@@ -1,0 +1,1437 @@
+{
+	"name": "Rokerbot_slots",
+	"intents": [{
+		"intent": "report-damaged-tree",
+		"examples": [{
+			"text": "a tree fell"
+		}, {
+			"text": "a tree fell down"
+		}, {
+			"text": "tree down"
+		}, {
+			"text": "tree has broken limbs"
+		}, {
+			"text": "tree damage"
+		}, {
+			"text": "fallen tree"
+		}],
+		"description": ""
+	}, {
+		"intent": "report-noise",
+		"examples": [{
+			"text": "my neighbor's dog won't stop barking"
+		}, {
+			"text": "kids on the street are too loud"
+		}, {
+			"text": "my neighbors are so loud"
+		}, {
+			"text": "i want to file a noise complaint"
+		}, {
+			"text": "there is a very loud ruckus outside my house"
+		}, {
+			"text": "the construction on my street is too loud"
+		}, {
+			"text": "they're playing loud rock music next door in the middle of the night"
+		}, {
+			"text": "obnoxious dog down the street barking its head off"
+		}],
+		"description": ""
+	}, {
+		"intent": "report-street-condition",
+		"examples": [{
+			"text": "there's a sink hole forming in the road by my son's school"
+		}, {
+			"text": "i want to report poor street conditions"
+		}, {
+			"text": "the condition of the street is very poor"
+		}, {
+			"text": "really bad pavement, it's crumbling apart"
+		}, {
+			"text": "the pavement on the road is damaged"
+		}, {
+			"text": "my street has terrible potholes"
+		}, {
+			"text": "so many potholes on my street i can barely drive in the driveway"
+		}, {
+			"text": "the lane line paint is really faded, can hardly see it"
+		}, {
+			"text": "the cement of the road in front of the library needs attention"
+		}],
+		"description": ""
+	}, {
+		"intent": "affirmative",
+		"examples": [{
+			"text": "yah"
+		}, {
+			"text": "yep"
+		}, {
+			"text": "yeah"
+		}, {
+			"text": "si"
+		}, {
+			"text": "yup"
+		}, {
+			"text": "yeh"
+		}, {
+			"text": "yes"
+		}, {
+			"text": "that's right"
+		}, {
+			"text": "correct"
+		}, {
+			"text": "that's correct"
+		}, {
+			"text": "you got it"
+		}],
+		"description": ""
+	}, {
+		"intent": "report-graffiti",
+		"examples": [{
+			"text": "graffiti artists have struck again"
+		}, {
+			"text": "there's a new graffiti tag on the parking garage"
+		}, {
+			"text": "really bad graffiti on my apartment building"
+		}, {
+			"text": "want to report some graffiti"
+		}, {
+			"text": "there's a kid spray painting outside"
+		}, {
+			"text": "spray paint on my office building"
+		}, {
+			"text": "my car was tagged"
+		}, {
+			"text": "somebody spray bombed my building"
+		}],
+		"description": ""
+	}, {
+		"intent": "negative",
+		"examples": [{
+			"text": "no"
+		}, {
+			"text": "nah"
+		}, {
+			"text": "naw"
+		}, {
+			"text": "nope"
+		}, {
+			"text": "noppe"
+		}, {
+			"text": "wrong"
+		}, {
+			"text": "that's not right"
+		}, {
+			"text": "that's wrong"
+		}, {
+			"text": "no sir"
+		}, {
+			"text": "try again"
+		}, {
+			"text": "negative"
+		}, {
+			"text": "not"
+		}],
+		"description": ""
+	}],
+	"entities": [{
+		"entity": "sub_component",
+		"values": [{
+			"type": "patterns",
+			"value": "sub_address",
+			"metadata": null,
+			"patterns": ["\\d+\\s(\\w)\\s"]
+		}],
+		"metadata": null,
+		"description": null
+	}, {
+		"entity": "street_name",
+		"values": [{
+			"type": "synonyms",
+			"value": "1st",
+			"metadata": null,
+			"synonyms": ["first"]
+		}, {
+			"type": "synonyms",
+			"value": "5th",
+			"metadata": null,
+			"synonyms": ["fifth"]
+		}, {
+			"type": "synonyms",
+			"value": "mlk",
+			"metadata": null,
+			"synonyms": ["m.l.k.", "martin luther king", "martin luther kind jr"]
+		}, {
+			"type": "synonyms",
+			"value": "astor",
+			"metadata": null,
+			"synonyms": []
+		}, {
+			"type": "synonyms",
+			"value": "37th",
+			"metadata": null,
+			"synonyms": ["thirty seventh"]
+		}],
+		"metadata": null,
+		"description": null,
+		"fuzzy_match": true
+	}, {
+		"entity": "landmark",
+		"values": [{
+			"type": "synonyms",
+			"value": "City Hall",
+			"metadata": null,
+			"synonyms": ["city hall", "cityhall", "citty hall"]
+		}],
+		"metadata": null,
+		"description": null,
+		"fuzzy_match": true
+	}, {
+		"entity": "sys-number",
+		"values": [],
+		"metadata": null,
+		"description": null
+	}, {
+		"entity": "street_word",
+		"values": [{
+			"type": "synonyms",
+			"value": "street",
+			"metadata": null,
+			"synonyms": ["st", "st."]
+		}, {
+			"type": "synonyms",
+			"value": "avenue",
+			"metadata": null,
+			"synonyms": ["ave", "ave."]
+		}, {
+			"type": "synonyms",
+			"value": "boulevard",
+			"metadata": null,
+			"synonyms": ["blvd", "blvd."]
+		}, {
+			"type": "synonyms",
+			"value": "road",
+			"metadata": null,
+			"synonyms": ["rd", "rd."]
+		}, {
+			"type": "synonyms",
+			"value": "place",
+			"metadata": null,
+			"synonyms": ["pl", "pl."]
+		}],
+		"metadata": null,
+		"description": null,
+		"fuzzy_match": false
+	}],
+	"language": "en",
+	"metadata": {
+		"api_version": {
+			"major_version": "v1",
+			"minor_version": "2017-05-26"
+		}
+	},
+	"description": "trying to use slots to get issue & location from user - this is an experiment",
+	"dialog_nodes": [{
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Can I get a street name for that address? Ex: \"main\", \"mlk\", \"astor\", \"1st\", \"fifth\", etc."]
+			}
+		},
+		"parent": "slot_14_1521146900539",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": "true",
+		"event_name": "nomatch",
+		"description": null,
+		"dialog_node": "handler_32_1521147143364",
+		"previous_sibling": "handler_31_1521147143364"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_14_1521146900539",
+		"context": {
+			"street_name": "@street_name"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "@street_name",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_15_1521146900539",
+		"previous_sibling": "handler_16_1521146900539"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Ok, street name is updated from <?event.previous_value?> to <?event.current_value?>."]
+			}
+		},
+		"parent": "slot_14_1521146900539",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": "event.previous_value != null && event.previous_value != event.current_value",
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_31_1521147143364",
+		"previous_sibling": "handler_15_1521146900539"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": "Can I get a street name for that address?"
+		},
+		"parent": "slot_14_1521146900539",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_16_1521146900539",
+		"previous_sibling": null
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_9_1520358290116",
+		"previous_sibling": "slot_6_1520358278972"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Please describe, in a few words, the issue you wish to report to 311."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_5_1520358086185",
+		"previous_sibling": "slot_12_1520358319388"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_6_1520358278972",
+		"previous_sibling": "slot_2_1520358026402"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_12_1520358319388",
+		"previous_sibling": "slot_9_1520358290116"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_2_1520358026402",
+		"previous_sibling": null
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_37_1520460846461",
+		"context": null,
+		"metadata": {},
+		"variable": "$address",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_40_1520460846461",
+		"previous_sibling": "node_39_1520460846461"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_37_1520460846461",
+		"context": null,
+		"metadata": {},
+		"variable": "$street_number",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_43_1520460846461",
+		"previous_sibling": "slot_40_1520460846461"
+	}, {
+		"type": "standard",
+		"title": "get another address",
+		"output": {
+			"text": {
+				"values": ["Oops. Let's try that address again. I'll need a street number, street name, and street word."],
+				"selection_policy": "sequential"
+			},
+			"context": {
+				"street_name": null,
+				"street_word": null,
+				"street_number": null,
+				"sub_component": null
+			}
+		},
+		"parent": "node_37_1520460846461",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "true",
+		"description": null,
+		"dialog_node": "node_39_1520460846461",
+		"previous_sibling": "node_38_1520460846461"
+	}, {
+		"type": "standard",
+		"title": "proceed with address",
+		"output": {
+			"text": {
+				"values": ["Ok, great."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_37_1520460846461",
+		"context": null,
+		"metadata": {},
+		"next_step": {
+			"behavior": "jump_to",
+			"selector": "condition",
+			"dialog_node": "node_54_1520461610873"
+		},
+		"conditions": "$address != null",
+		"description": null,
+		"dialog_node": "node_38_1520460846461",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Ok, you want to report a damaged tree."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "slot_6_1520358278972",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-damaged-tree",
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_19_1520358708980",
+		"previous_sibling": "handler_7_1520358278972"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_6_1520358278972",
+		"context": {
+			"ct": "tree damage"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-damaged-tree",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_7_1520358278972",
+		"previous_sibling": "handler_8_1520358278972"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_6_1520358278972",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_8_1520358278972",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_12_1520358319388",
+		"context": {
+			"ct": "graffiti"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-graffiti",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_13_1520358319388",
+		"previous_sibling": "handler_14_1520358319388"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Ok, you want to report graffiti."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "slot_12_1520358319388",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-graffiti",
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_23_1520358745346",
+		"previous_sibling": "handler_13_1520358319388"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_12_1520358319388",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_14_1520358319388",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_8_1521146883638",
+		"context": {
+			"landmark": "@landmark",
+			"street_name": "placeholder",
+			"street_word": "placeholder",
+			"street_number": "placeholder",
+			"sub_component": "placeholder"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "@landmark",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_9_1521146883638",
+		"previous_sibling": "handler_10_1521146883638"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_8_1521146883638",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_10_1521146883638",
+		"previous_sibling": null
+	}, {
+		"type": "response_condition",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["I have the address as ' $landmark_address ', which is the address for '$landmark'. Is that right?"]
+			}
+		},
+		"parent": "node_36_1520460846441",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "$landmark_address != null",
+		"description": null,
+		"dialog_node": "node_7_1520971063998",
+		"previous_sibling": "node_37_1520460846461"
+	}, {
+		"type": "response_condition",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["I have the address as ' $street_number $sub_component $street_name $street_word '. Is that right?"],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_36_1520460846441",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "$street_number != null && $street_name != null && $street_word != null",
+		"description": null,
+		"dialog_node": "node_6_1520971048725",
+		"previous_sibling": "node_7_1520971063998"
+	}, {
+		"type": "frame",
+		"title": "confirmation_address",
+		"output": {},
+		"parent": "node_36_1520460846441",
+		"context": null,
+		"metadata": {
+			"fallback": "leave"
+		},
+		"next_step": {
+			"behavior": "skip_user_input"
+		},
+		"conditions": "true",
+		"description": null,
+		"dialog_node": "node_37_1520460846461",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_17_1520457096281",
+		"context": {
+			"c_ct": "$ct"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#affirmative",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_18_1520457096281",
+		"previous_sibling": "handler_19_1520457096281"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_17_1520457096281",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_19_1520457096281",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_11_1521146898185",
+		"context": {
+			"street_number": "@sys-number"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "@sys-number",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_12_1521146898185",
+		"previous_sibling": "handler_13_1521146898185"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Can I get a street number for that address? Ex: \"55\", \"1\", \"102\", etc."]
+			}
+		},
+		"parent": "slot_11_1521146898185",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": "true",
+		"event_name": "nomatch",
+		"description": null,
+		"dialog_node": "handler_26_1521147057621",
+		"previous_sibling": "handler_25_1521147057621"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Ok, street number is updated from '<?event.previous_value?>' to '<?event.current_value?>'."]
+			}
+		},
+		"parent": "slot_11_1521146898185",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": "event.previous_value != null && event.previous_value != event.current_value",
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_25_1521147057621",
+		"previous_sibling": "handler_12_1521146898185"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": "Can I get a street number for that address?"
+		},
+		"parent": "slot_11_1521146898185",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_13_1521146898185",
+		"previous_sibling": null
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_6_1521146866801",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$street_word",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_17_1521146902279",
+		"previous_sibling": "slot_14_1521146900539"
+	}, {
+		"type": "standard",
+		"title": "no landmark given",
+		"output": {},
+		"parent": "node_6_1521146866801",
+		"context": null,
+		"metadata": {},
+		"next_step": {
+			"behavior": "jump_to",
+			"selector": "condition",
+			"dialog_node": "node_36_1520460846441"
+		},
+		"conditions": "$landmark == null",
+		"description": null,
+		"dialog_node": "node_37_1521147552788",
+		"previous_sibling": "node_19_1520974010769"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_6_1521146866801",
+		"context": null,
+		"metadata": {},
+		"variable": "$sub_component",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_20_1521146903715",
+		"previous_sibling": "slot_8_1521146883638"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_6_1521146866801",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$street_name",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_14_1521146900539",
+		"previous_sibling": "slot_11_1521146898185"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["I'll need a street number, street name, and a street word (like \"road\", \"st\", \"blvd\", \"way\", etc.). Or, you can give me the name of a Manhattan landmark."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_6_1521146866801",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_7_1521146883633",
+		"previous_sibling": "node_37_1521147552788"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_6_1521146866801",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$street_number",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_11_1521146898185",
+		"previous_sibling": "slot_20_1521146903715"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_6_1521146866801",
+		"context": null,
+		"metadata": {},
+		"variable": "$landmark",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_8_1521146883638",
+		"previous_sibling": "handler_7_1521146883633"
+	}, {
+		"type": "standard",
+		"title": "get landmark address",
+		"output": {},
+		"parent": "node_6_1521146866801",
+		"context": {
+			"landmark_address": "City Hall Park, New York, NY 10007, USA"
+		},
+		"metadata": {},
+		"next_step": {
+			"behavior": "jump_to",
+			"selector": "condition",
+			"dialog_node": "node_36_1520460846441"
+		},
+		"conditions": "$landmark != null",
+		"description": null,
+		"dialog_node": "node_19_1520974010769",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_40_1520460846461",
+		"context": {
+			"address": "$street_number $street_name $street_word"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#affirmative",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_42_1520460846461",
+		"previous_sibling": "handler_41_1520460846461"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_40_1520460846461",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_41_1520460846461",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Ok, you want to report poor street conditions."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "slot_2_1520358026402",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-street-condition",
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_17_1520358365938",
+		"previous_sibling": "handler_3_1520358026402"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_2_1520358026402",
+		"context": {
+			"ct": "poor street conditions"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-street-condition",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_3_1520358026402",
+		"previous_sibling": "handler_4_1520358026402"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_2_1520358026402",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_4_1520358026402",
+		"previous_sibling": null
+	}, {
+		"type": "standard",
+		"title": "get another issue report",
+		"output": {
+			"text": {
+				"values": ["Oops. Let's try again. Please describe, in a few words, the issue you'd like to report to 311."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_16_1520457025654",
+		"context": null,
+		"metadata": {},
+		"next_step": {
+			"behavior": "jump_to",
+			"selector": "user_input",
+			"dialog_node": "node_1_1520357929976"
+		},
+		"conditions": "true",
+		"description": null,
+		"dialog_node": "node_35_1520458089865",
+		"previous_sibling": "node_34_1520458045780"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_16_1520457025654",
+		"context": null,
+		"metadata": {},
+		"variable": "$c_ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_17_1520457096281",
+		"previous_sibling": "node_35_1520458089865"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_16_1520457025654",
+		"context": null,
+		"metadata": {},
+		"variable": "$ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_22_1520457485837",
+		"previous_sibling": "slot_17_1520457096281"
+	}, {
+		"type": "standard",
+		"title": "proceed with issue report",
+		"output": {
+			"text": {
+				"values": ["Ok, great."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_16_1520457025654",
+		"context": null,
+		"metadata": {},
+		"next_step": {
+			"behavior": "jump_to",
+			"selector": "body",
+			"dialog_node": "node_27_1520358866193"
+		},
+		"conditions": "$ct != null && $c_ct != null",
+		"description": null,
+		"dialog_node": "node_34_1520458045780",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Ok, you want to file a noise complaint."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "slot_9_1520358290116",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-noise",
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_21_1520358727229",
+		"previous_sibling": "handler_10_1520358290116"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_9_1520358290116",
+		"context": {
+			"ct": "noise"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-noise",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_10_1520358290116",
+		"previous_sibling": "handler_11_1520358290116"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_9_1520358290116",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_11_1520358290116",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_22_1520457485837",
+		"context": {
+			"ct": null
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#negative",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_23_1520457485837",
+		"previous_sibling": "handler_24_1520457485837"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Oops, let's try again. Tell me in a few words the issue you would like to report to 311."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "slot_22_1520457485837",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_31_1520457980166",
+		"previous_sibling": "handler_23_1520457485837"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_22_1520457485837",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_24_1520457485837",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Ok, street word is updated from <?event.previous_value?> to <?event.current_value?>."]
+			}
+		},
+		"parent": "slot_17_1521146902279",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": "event.previous_value != null && event.previous_value != event.current_value",
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_33_1521147206517",
+		"previous_sibling": "handler_18_1521146902279"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Can I get a street word for that address? Examples: \"st\", \"rd\", \"avenue\", \"place\", etc."]
+			}
+		},
+		"parent": "slot_17_1521146902279",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": "true",
+		"event_name": "nomatch",
+		"description": null,
+		"dialog_node": "handler_34_1521147206517",
+		"previous_sibling": "handler_33_1521147206517"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_17_1521146902279",
+		"context": {
+			"street_word": "@street_word"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "@street_word",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_18_1521146902279",
+		"previous_sibling": "handler_19_1521146902279"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": "Can I get a street word for that address? Ex: \"st\", \"rd\", \"avenue\", \"place\", etc."
+		},
+		"parent": "slot_17_1521146902279",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_19_1521146902279",
+		"previous_sibling": null
+	}, {
+		"type": "response_condition",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["This report about ' $c_ct ', at ' $address ', will be filed with 311."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_54_1520461610873",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "$address != null",
+		"description": null,
+		"dialog_node": "node_38_1521147872666",
+		"previous_sibling": "node_39_1521147942322"
+	}, {
+		"type": "response_condition",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["This report about ' $c_ct ', at ' $landmark_address ', will be filed with 311."]
+			}
+		},
+		"parent": "node_54_1520461610873",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "$landmark_address != null",
+		"description": null,
+		"dialog_node": "node_39_1521147942322",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_20_1521146903715",
+		"context": {
+			"sub_component": "<? input.text.extract('\\d+\\s(\\w)\\s',1) ?>"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "@sub_component",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_21_1521146903715",
+		"previous_sibling": "handler_22_1521146903715"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_20_1521146903715",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_22_1521146903715",
+		"previous_sibling": null
+	}, {
+		"type": "frame",
+		"title": "confirmation_issue",
+		"output": {},
+		"parent": "node_15_1520456922489",
+		"context": null,
+		"metadata": {
+			"fallback": "leave"
+		},
+		"next_step": {
+			"behavior": "skip_user_input"
+		},
+		"conditions": "true",
+		"description": null,
+		"dialog_node": "node_16_1520457025654",
+		"digress_out": "allow_all",
+		"previous_sibling": null,
+		"digress_out_slots": "not_allowed"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_43_1520460846461",
+		"context": {
+			"address": null,
+			"landmark": null,
+			"street_name": null,
+			"street_word": null,
+			"street_number": null,
+			"landmark_address": null
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#negative",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_45_1520460846461",
+		"previous_sibling": "handler_44_1520460846461"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["Oops, let's try again. Tell me in a few words the issue you would like to report to 311."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "slot_43_1520460846461",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "filled",
+		"description": null,
+		"dialog_node": "handler_46_1520460846461",
+		"previous_sibling": "handler_45_1520460846461"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_43_1520460846461",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_44_1520460846461",
+		"previous_sibling": null
+	}, {
+		"type": "frame",
+		"title": "Get Issue",
+		"output": {
+			"text": {
+				"values": [],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": null,
+		"context": null,
+		"metadata": {
+			"fallback": "leave"
+		},
+		"next_step": {
+			"behavior": "jump_to",
+			"selector": "condition",
+			"dialog_node": "node_15_1520456922489"
+		},
+		"conditions": "#report-street-condition || #report-graffiti || #report-noise || #report-damaged-tree",
+		"digress_in": "does_not_return",
+		"description": null,
+		"dialog_node": "node_1_1520357929976",
+		"digress_out": "allow_all",
+		"previous_sibling": "Welcome",
+		"digress_out_slots": "not_allowed"
+	}, {
+		"type": "frame",
+		"title": "Get Address",
+		"output": {
+			"text": {
+				"values": ["Ok, got it."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": null,
+		"context": null,
+		"metadata": {
+			"fallback": "leave"
+		},
+		"next_step": {
+			"behavior": "skip_user_input"
+		},
+		"conditions": "true",
+		"digress_in": "does_not_return",
+		"description": null,
+		"dialog_node": "node_6_1521146866801",
+		"digress_out": "allow_all",
+		"previous_sibling": "node_27_1520358866193",
+		"digress_out_slots": "not_allowed"
+	}, {
+		"type": "standard",
+		"title": "Confirm The Issue",
+		"output": {
+			"text": {
+				"values": ["I have a report about '$ct'. Is that right?"],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": null,
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "$ct != null && $ct != ''",
+		"description": null,
+		"dialog_node": "node_15_1520456922489",
+		"previous_sibling": "node_1_1520357929976"
+	}, {
+		"type": "standard",
+		"title": "Report complete",
+		"output": {},
+		"parent": null,
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"next_step": null,
+		"conditions": "$c_ct != null && $address != null || c_ct != null && $landmark_address != null",
+		"digress_in": "does_not_return",
+		"description": null,
+		"dialog_node": "node_54_1520461610873",
+		"digress_out": "allow_all",
+		"previous_sibling": "node_36_1520460846441"
+	}, {
+		"type": "standard",
+		"title": "Confirm The Address",
+		"output": {},
+		"parent": null,
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"next_step": null,
+		"conditions": "true",
+		"digress_in": "does_not_return",
+		"description": null,
+		"dialog_node": "node_36_1520460846441",
+		"digress_out": "allow_all",
+		"previous_sibling": "node_6_1521146866801"
+	}, {
+		"type": "standard",
+		"title": "Anything else",
+		"output": {
+			"text": {
+				"values": ["I didn't understand. You can try rephrasing.", "Can you reword your statement? I'm not understanding.", "I didn't get your meaning."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": null,
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "anything_else",
+		"description": null,
+		"dialog_node": "Anything else",
+		"previous_sibling": "node_54_1520461610873"
+	}, {
+		"type": "standard",
+		"title": "Issue confirmed, need address",
+		"output": {
+			"text": {
+				"values": ["Next, I'll need to get an address where the reported issue is located."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": null,
+		"context": null,
+		"metadata": {},
+		"next_step": {
+			"behavior": "jump_to",
+			"selector": "condition",
+			"dialog_node": "node_6_1521146866801"
+		},
+		"conditions": "true",
+		"description": null,
+		"dialog_node": "node_27_1520358866193",
+		"previous_sibling": "node_15_1520456922489"
+	}, {
+		"type": "standard",
+		"title": "Welcome",
+		"output": {
+			"text": {
+				"values": ["Hello. I am a 311 chatbot, and I am here to help you file 311 issues. Please describe, in a few words, the issue you'd like to file with 311."],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": null,
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "welcome",
+		"description": null,
+		"dialog_node": "Welcome",
+		"previous_sibling": null
+	}],
+	"workspace_id": "1e53d372-3aed-48b5-bac6-c199e86a6470",
+	"counterexamples": [],
+	"learning_opt_out": false
+}
