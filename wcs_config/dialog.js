@@ -1798,48 +1798,23 @@ const exportDialogTree = () => {
 
   // remember - order here is important!
   let groups = [
-    get_greeting(),
-    get_function_question(),
-    get_issue_report(),
 
-    get_landmark_address(),
-    get_confirm_landmark_address(),
-    get_confirm_address(),
-    get_address_out_of_bounds(),
+    welcome(),
+    
+    get_issue(),
 
-    get_failed_address_noise(),
-    get_failed_address_graffiti(),
-    get_failed_address_street_condition(),
-    get_failed_address_damaged_tree(),
+    confirm_the_issue(),
 
-    get_unusable_address(),
-    get_rejected_address(),
-    get_report_address(),
+    issue_confirmed_need_address(),
 
-    get_noise_dep_entities(),
-    get_noise_nypd_entities(),
-    get_noise_alarm(),
-    get_graffiti_dsny_entities(),
-    get_street_condition_dot_entities(),
-    get_damaged_tree_dpr_entities(),
+    get_address(),
 
-    //the following functions have replaced "get_siblings"
-    get_graffiti(),
-    get_noise(),
-    get_street_condition(),
-    get_damaged_tree(),
+    confirm_the_address(),
 
-    get_generic_report(),
-    get_failed_ct(),
-    get_unclassifiable(),
-    get_misclassified(),
+    report_complete(),
 
-    get_success_entity(),
-    get_success_generic(),
-    get_addtl_report(),
-    get_end_thanks(),
+    anything_else()
 
-    get_default()
   ];
 
 
