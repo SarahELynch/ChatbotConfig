@@ -134,6 +134,38 @@
 		"description": ""
 	}],
 	"entities": [{
+		"entity": "dep",
+		"values": [{
+			"type": "synonyms",
+			"value": "a.c. unit",
+			"metadata": null,
+			"synonyms": ["ac unit", "a.c.", "air conditioner", "air conditioner unit", "air condition unit", "a/c unit", "a/c", "a.c. unit"]
+		}, {
+			"type": "synonyms",
+			"value": "animal",
+			"metadata": null,
+			"synonyms": ["animal", "mongrel", "dog", "canine", "pup", "mutt", "barking", "bark", "yapping", "yipping", "meowing", "howling", "cat", "kitten", "kitty", "yowling", "four-legged"]
+		}, {
+			"type": "synonyms",
+			"value": "ventilation",
+			"metadata": null,
+			"synonyms": ["ventilation", "vent", "air vent", "air ventilation", "air duct", "duct"]
+		}],
+		"metadata": null,
+		"description": null,
+		"fuzzy_match": true
+	}, {
+		"entity": "dpr",
+		"values": [{
+			"type": "synonyms",
+			"value": "dead/dying tree",
+			"metadata": null,
+			"synonyms": ["dead tree", "dying tree", "dried up", "bare", "naked", "sick tree", "dry tree"]
+		}],
+		"metadata": null,
+		"description": null,
+		"fuzzy_match": true
+	}, {
 		"entity": "sub_component",
 		"values": [{
 			"type": "patterns",
@@ -147,14 +179,14 @@
 		"entity": "street_name",
 		"values": [{
 			"type": "synonyms",
-			"value": "1st",
-			"metadata": null,
-			"synonyms": ["first"]
-		}, {
-			"type": "synonyms",
 			"value": "5th",
 			"metadata": null,
 			"synonyms": ["fifth"]
+		}, {
+			"type": "synonyms",
+			"value": "1st",
+			"metadata": null,
+			"synonyms": ["first"]
 		}, {
 			"type": "synonyms",
 			"value": "mlk",
@@ -170,6 +202,17 @@
 			"value": "37th",
 			"metadata": null,
 			"synonyms": ["thirty seventh"]
+		}],
+		"metadata": null,
+		"description": null,
+		"fuzzy_match": true
+	}, {
+		"entity": "nypd",
+		"values": [{
+			"type": "synonyms",
+			"value": "neighbor",
+			"metadata": null,
+			"synonyms": ["neighbor", "next door", "nextdoor", "next-door"]
 		}],
 		"metadata": null,
 		"description": null,
@@ -194,14 +237,14 @@
 		"entity": "street_word",
 		"values": [{
 			"type": "synonyms",
+			"value": "road",
+			"metadata": null,
+			"synonyms": ["rd", "rd."]
+		}, {
+			"type": "synonyms",
 			"value": "street",
 			"metadata": null,
 			"synonyms": ["st", "st."]
-		}, {
-			"type": "synonyms",
-			"value": "avenue",
-			"metadata": null,
-			"synonyms": ["ave", "ave."]
 		}, {
 			"type": "synonyms",
 			"value": "boulevard",
@@ -209,9 +252,9 @@
 			"synonyms": ["blvd", "blvd."]
 		}, {
 			"type": "synonyms",
-			"value": "road",
+			"value": "avenue",
 			"metadata": null,
-			"synonyms": ["rd", "rd."]
+			"synonyms": ["ave", "ave."]
 		}, {
 			"type": "synonyms",
 			"value": "place",
@@ -221,6 +264,17 @@
 		"metadata": null,
 		"description": null,
 		"fuzzy_match": false
+	}, {
+		"entity": "dsny",
+		"values": [{
+			"type": "synonyms",
+			"value": "removal",
+			"metadata": null,
+			"synonyms": ["remove", "removal", "removed", "cleaned off", "clean off", "paint over", "painted over", "erase", "erased", "cleared"]
+		}],
+		"metadata": null,
+		"description": null,
+		"fuzzy_match": true
 	}],
 	"language": "en",
 	"metadata": {
@@ -295,23 +349,6 @@
 		"dialog_node": "handler_16_1521146900539",
 		"previous_sibling": null
 	}, {
-		"type": "slot",
-		"title": null,
-		"output": {},
-		"parent": "node_1_1520357929976",
-		"context": null,
-		"metadata": {
-			"_customization": {
-				"mcr": true
-			}
-		},
-		"variable": "$ct",
-		"next_step": null,
-		"conditions": null,
-		"description": null,
-		"dialog_node": "slot_9_1520358290116",
-		"previous_sibling": "slot_6_1520358278972"
-	}, {
 		"type": "event_handler",
 		"title": null,
 		"output": {
@@ -328,6 +365,23 @@
 		"event_name": "focus",
 		"description": null,
 		"dialog_node": "handler_5_1520358086185",
+		"previous_sibling": "slot_6_1520358278972"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
+		"variable": "$ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_9_1520358290116",
 		"previous_sibling": "slot_12_1520358319388"
 	}, {
 		"type": "slot",
@@ -362,7 +416,33 @@
 		"conditions": null,
 		"description": null,
 		"dialog_node": "slot_12_1520358319388",
-		"previous_sibling": "slot_9_1520358290116"
+		"previous_sibling": "slot_22_1521220770556"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {},
+		"variable": "$agency",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_13_1521220555649",
+		"previous_sibling": "slot_10_1521220551613"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {},
+		"variable": "$agency",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_22_1521220770556",
+		"previous_sibling": "slot_13_1521220555649"
 	}, {
 		"type": "slot",
 		"title": null,
@@ -379,6 +459,32 @@
 		"conditions": null,
 		"description": null,
 		"dialog_node": "slot_2_1520358026402",
+		"previous_sibling": "slot_9_1520358290116"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {},
+		"variable": "$agency",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_10_1521220551613",
+		"previous_sibling": "slot_4_1521220486223"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_1_1520357929976",
+		"context": null,
+		"metadata": {},
+		"variable": "$agency",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_4_1521220486223",
 		"previous_sibling": null
 	}, {
 		"type": "slot",
@@ -453,24 +559,6 @@
 	}, {
 		"type": "event_handler",
 		"title": null,
-		"output": {
-			"text": {
-				"values": ["Ok, you want to report a damaged tree."],
-				"selection_policy": "sequential"
-			}
-		},
-		"parent": "slot_6_1520358278972",
-		"context": null,
-		"metadata": {},
-		"next_step": null,
-		"conditions": "#report-damaged-tree",
-		"event_name": "filled",
-		"description": null,
-		"dialog_node": "handler_19_1520358708980",
-		"previous_sibling": "handler_7_1520358278972"
-	}, {
-		"type": "event_handler",
-		"title": null,
 		"output": {},
 		"parent": "slot_6_1520358278972",
 		"context": {
@@ -511,24 +599,6 @@
 		"description": null,
 		"dialog_node": "handler_13_1520358319388",
 		"previous_sibling": "handler_14_1520358319388"
-	}, {
-		"type": "event_handler",
-		"title": null,
-		"output": {
-			"text": {
-				"values": ["Ok, you want to report graffiti."],
-				"selection_policy": "sequential"
-			}
-		},
-		"parent": "slot_12_1520358319388",
-		"context": null,
-		"metadata": {},
-		"next_step": null,
-		"conditions": "#report-graffiti",
-		"event_name": "filled",
-		"description": null,
-		"dialog_node": "handler_23_1520358745346",
-		"previous_sibling": "handler_13_1520358319388"
 	}, {
 		"type": "event_handler",
 		"title": null,
@@ -629,7 +699,8 @@
 		"output": {},
 		"parent": "slot_17_1520457096281",
 		"context": {
-			"c_ct": "$ct"
+			"c_ct": "$ct",
+			"c_agency": "$agency"
 		},
 		"metadata": {},
 		"next_step": null,
@@ -875,24 +946,6 @@
 	}, {
 		"type": "event_handler",
 		"title": null,
-		"output": {
-			"text": {
-				"values": ["Ok, you want to report poor street conditions."],
-				"selection_policy": "sequential"
-			}
-		},
-		"parent": "slot_2_1520358026402",
-		"context": null,
-		"metadata": {},
-		"next_step": null,
-		"conditions": "#report-street-condition",
-		"event_name": "filled",
-		"description": null,
-		"dialog_node": "handler_17_1520358365938",
-		"previous_sibling": "handler_3_1520358026402"
-	}, {
-		"type": "event_handler",
-		"title": null,
 		"output": {},
 		"parent": "slot_2_1520358026402",
 		"context": {
@@ -940,17 +993,21 @@
 		"dialog_node": "node_35_1520458089865",
 		"previous_sibling": "node_34_1520458045780"
 	}, {
-		"type": "slot",
+		"type": "response_condition",
 		"title": null,
-		"output": {},
+		"output": {
+			"text": {
+				"values": []
+			}
+		},
 		"parent": "node_16_1520457025654",
 		"context": null,
+		"disabled": true,
 		"metadata": {},
-		"variable": "$c_ct",
 		"next_step": null,
 		"conditions": null,
 		"description": null,
-		"dialog_node": "slot_17_1520457096281",
+		"dialog_node": "node_58_1521227765093",
 		"previous_sibling": "node_35_1520458089865"
 	}, {
 		"type": "slot",
@@ -965,6 +1022,19 @@
 		"description": null,
 		"dialog_node": "slot_22_1520457485837",
 		"previous_sibling": "slot_17_1520457096281"
+	}, {
+		"type": "slot",
+		"title": null,
+		"output": {},
+		"parent": "node_16_1520457025654",
+		"context": null,
+		"metadata": {},
+		"variable": "$c_ct",
+		"next_step": null,
+		"conditions": null,
+		"description": null,
+		"dialog_node": "slot_17_1520457096281",
+		"previous_sibling": "node_58_1521227765093"
 	}, {
 		"type": "standard",
 		"title": "proceed with issue report",
@@ -989,21 +1059,91 @@
 	}, {
 		"type": "event_handler",
 		"title": null,
-		"output": {
-			"text": {
-				"values": ["Ok, you want to file a noise complaint."],
-				"selection_policy": "sequential"
-			}
+		"output": {},
+		"parent": "slot_22_1521220770556",
+		"context": {
+			"ct": "noise",
+			"agency": "nypd"
 		},
-		"parent": "slot_9_1520358290116",
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-noise && @nypd",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_23_1521220770556",
+		"previous_sibling": "handler_24_1521220770556"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_22_1521220770556",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_24_1521220770556",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_10_1521220551613",
+		"context": {
+			"ct": "graffiti",
+			"agency": "dsny",
+			"entity": "@dsny.value"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-graffiti && @dsny",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_11_1521220551613",
+		"previous_sibling": "handler_12_1521220551613"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_10_1521220551613",
 		"context": null,
 		"metadata": {},
 		"next_step": null,
-		"conditions": "#report-noise",
-		"event_name": "filled",
+		"conditions": null,
+		"event_name": "focus",
 		"description": null,
-		"dialog_node": "handler_21_1520358727229",
-		"previous_sibling": "handler_10_1520358290116"
+		"dialog_node": "handler_12_1521220551613",
+		"previous_sibling": null
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_13_1521220555649",
+		"context": {
+			"ct": "noise",
+			"agency": "dep"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-noise && @dep",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_14_1521220555649",
+		"previous_sibling": "handler_15_1521220555649"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_13_1521220555649",
+		"context": null,
+		"metadata": null,
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_15_1521220555649",
+		"previous_sibling": null
 	}, {
 		"type": "event_handler",
 		"title": null,
@@ -1204,13 +1344,65 @@
 		"dialog_node": "handler_22_1521146903715",
 		"previous_sibling": null
 	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_4_1521220486223",
+		"context": {
+			"agency": "dpr",
+			"entity": "@dpr.value"
+		},
+		"metadata": {},
+		"next_step": null,
+		"conditions": "#report-damaged-tree && @dpr",
+		"event_name": "input",
+		"description": null,
+		"dialog_node": "handler_5_1521220486223",
+		"previous_sibling": "handler_6_1521220486223"
+	}, {
+		"type": "event_handler",
+		"title": null,
+		"output": {},
+		"parent": "slot_4_1521220486223",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": null,
+		"event_name": "focus",
+		"description": null,
+		"dialog_node": "handler_6_1521220486223",
+		"previous_sibling": null
+	}, {
+		"type": "response_condition",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["I have a report about '$ct', specifically about '$entity'. Is that right?"]
+			}
+		},
+		"parent": "node_15_1520456922489",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "$agency != \"null\"",
+		"description": null,
+		"dialog_node": "node_28_1521221791354",
+		"previous_sibling": "node_27_1521221715274"
+	}, {
 		"type": "frame",
 		"title": "confirmation_issue",
-		"output": {},
+		"output": {
+			"text": {
+				"values": []
+			}
+		},
 		"parent": "node_15_1520456922489",
 		"context": null,
 		"metadata": {
-			"fallback": "leave"
+			"fallback": "leave",
+			"_customization": {
+				"mcr": false
+			}
 		},
 		"next_step": {
 			"behavior": "skip_user_input"
@@ -1219,8 +1411,25 @@
 		"description": null,
 		"dialog_node": "node_16_1520457025654",
 		"digress_out": "allow_all",
-		"previous_sibling": null,
+		"previous_sibling": "node_28_1521221791354",
 		"digress_out_slots": "not_allowed"
+	}, {
+		"type": "response_condition",
+		"title": null,
+		"output": {
+			"text": {
+				"values": ["I have a report about '$ct'. Is that right?"],
+				"selection_policy": "sequential"
+			}
+		},
+		"parent": "node_15_1520456922489",
+		"context": null,
+		"metadata": {},
+		"next_step": null,
+		"conditions": "$agency == null",
+		"description": null,
+		"dialog_node": "node_27_1521221715274",
+		"previous_sibling": null
 	}, {
 		"type": "event_handler",
 		"title": null,
@@ -1325,19 +1534,20 @@
 	}, {
 		"type": "standard",
 		"title": "Confirm The Issue",
-		"output": {
-			"text": {
-				"values": ["I have a report about '$ct'. Is that right?"],
-				"selection_policy": "sequential"
-			}
-		},
+		"output": {},
 		"parent": null,
 		"context": null,
-		"metadata": {},
+		"metadata": {
+			"_customization": {
+				"mcr": true
+			}
+		},
 		"next_step": null,
 		"conditions": "$ct != null && $ct != ''",
+		"digress_in": "does_not_return",
 		"description": null,
 		"dialog_node": "node_15_1520456922489",
+		"digress_out": "allow_all",
 		"previous_sibling": "node_1_1520357929976"
 	}, {
 		"type": "standard",
