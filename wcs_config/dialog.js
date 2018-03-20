@@ -1294,8 +1294,7 @@ const welcome = () => {
 
 const get_issue = () {
   return [
-    node(
-      {
+    node({
         "type": "frame",
         "title": "Get Issue",
         "output": {
@@ -1321,20 +1320,473 @@ const get_issue = () {
         "digress_out": "allow_all",
         "previous_sibling": "Welcome",
         "digress_out_slots": "not_allowed"
-      }
-    )
+      }, [
+          node({
+        		"type": "event_handler",
+        		"title": null,
+        		"output": {
+        			"text": {
+        				"values": ["Please describe, in a few words, the issue you wish to report to 311."],
+        				"selection_policy": "sequential"
+        			}
+        		},
+        		"parent": "node_1_1520357929976",
+        		"context": null,
+        		"metadata": {},
+        		"next_step": null,
+        		"conditions": null,
+        		"event_name": "focus",
+        		"description": null,
+        		"dialog_node": "handler_5_1520358086185",
+        		"previous_sibling": "slot_6_1520358278972"
+        	}),
+          node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_1_1520357929976",
+          		"context": null,
+          		"metadata": {
+          			"_customization": {
+          				"mcr": true
+          			}
+          		},
+          		"variable": "$ct",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_9_1520358290116",
+          		"previous_sibling": "slot_12_1520358319388"
+          	}, [
+                  node({
+                		"type": "event_handler",
+                		"title": null,
+                		"output": {},
+                		"parent": "slot_9_1520358290116",
+                		"context": {
+                			"ct": "noise"
+                		},
+                		"metadata": {},
+                		"next_step": null,
+                		"conditions": "#report-noise",
+                		"event_name": "input",
+                		"description": null,
+                		"dialog_node": "handler_10_1520358290116",
+                		"previous_sibling": "handler_11_1520358290116"
+                	}),
+                  node({
+                		"type": "event_handler",
+                		"title": null,
+                		"output": {},
+                		"parent": "slot_9_1520358290116",
+                		"context": null,
+                		"metadata": {},
+                		"next_step": null,
+                		"conditions": null,
+                		"event_name": "focus",
+                		"description": null,
+                		"dialog_node": "handler_11_1520358290116",
+                		"previous_sibling": null
+                	})
+                ]),
+          node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_1_1520357929976",
+          		"context": null,
+          		"metadata": {
+          			"_customization": {
+          				"mcr": true
+          			}
+          		},
+          		"variable": "$ct",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_6_1520358278972",
+          		"previous_sibling": "slot_2_1520358026402"
+          	}, [
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_6_1520358278972",
+                    		"context": {
+                    			"ct": "tree damage"
+                    		},
+                    		"metadata": {},
+                    		"next_step": null,
+                    		"conditions": "#report-damaged-tree",
+                    		"event_name": "input",
+                    		"description": null,
+                    		"dialog_node": "handler_7_1520358278972",
+                    		"previous_sibling": "handler_8_1520358278972"
+                    	}),
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_6_1520358278972",
+                    		"context": null,
+                    		"metadata": {},
+                    		"next_step": null,
+                    		"conditions": null,
+                    		"event_name": "focus",
+                    		"description": null,
+                    		"dialog_node": "handler_8_1520358278972",
+                    		"previous_sibling": null
+                    	})
+                  ]),
+          node({
+        		"type": "slot",
+        		"title": null,
+        		"output": {},
+        		"parent": "node_1_1520357929976",
+        		"context": null,
+        		"metadata": {
+        			"_customization": {
+        				"mcr": true
+        			}
+        		},
+        		"variable": "$ct",
+        		"next_step": null,
+        		"conditions": null,
+        		"description": null,
+        		"dialog_node": "slot_12_1520358319388",
+        		"previous_sibling": "slot_22_1521220770556"
+        	}, [
+                        node({
+                      		"type": "event_handler",
+                      		"title": null,
+                      		"output": {},
+                      		"parent": "slot_12_1520358319388",
+                      		"context": {
+                      			"ct": "graffiti"
+                      		},
+                      		"metadata": {},
+                      		"next_step": null,
+                      		"conditions": "#report-graffiti",
+                      		"event_name": "input",
+                      		"description": null,
+                      		"dialog_node": "handler_13_1520358319388",
+                      		"previous_sibling": "handler_14_1520358319388"
+                      	}),
+                        node({
+                      		"type": "event_handler",
+                      		"title": null,
+                      		"output": {},
+                      		"parent": "slot_12_1520358319388",
+                      		"context": null,
+                      		"metadata": {},
+                      		"next_step": null,
+                      		"conditions": null,
+                      		"event_name": "focus",
+                      		"description": null,
+                      		"dialog_node": "handler_14_1520358319388",
+                      		"previous_sibling": null
+                      	})
+                  ]),
+          node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_1_1520357929976",
+          		"context": null,
+          		"metadata": {},
+          		"variable": "$agency",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_13_1521220555649",
+          		"previous_sibling": "slot_10_1521220551613"
+          	}, [
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_13_1521220555649",
+                    		"context": {
+                    			"ct": "noise",
+                    			"agency": "dep"
+                    		},
+                    		"metadata": {},
+                    		"next_step": null,
+                    		"conditions": "#report-noise && @dep",
+                    		"event_name": "input",
+                    		"description": null,
+                    		"dialog_node": "handler_14_1521220555649",
+                    		"previous_sibling": "handler_15_1521220555649"
+                    	}),
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_13_1521220555649",
+                    		"context": null,
+                    		"metadata": null,
+                    		"next_step": null,
+                    		"conditions": null,
+                    		"event_name": "focus",
+                    		"description": null,
+                    		"dialog_node": "handler_15_1521220555649",
+                    		"previous_sibling": null
+                    	})
+                  ]),
+          node({
+        		"type": "slot",
+        		"title": null,
+        		"output": {},
+        		"parent": "node_1_1520357929976",
+        		"context": null,
+        		"metadata": {},
+        		"variable": "$agency",
+        		"next_step": null,
+        		"conditions": null,
+        		"description": null,
+        		"dialog_node": "slot_22_1521220770556",
+        		"previous_sibling": "slot_13_1521220555649"
+        	}, [
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_22_1521220770556",
+                    		"context": {
+                    			"ct": "noise",
+                    			"agency": "nypd"
+                    		},
+                    		"metadata": {},
+                    		"next_step": null,
+                    		"conditions": "#report-noise && @nypd",
+                    		"event_name": "input",
+                    		"description": null,
+                    		"dialog_node": "handler_23_1521220770556",
+                    		"previous_sibling": "handler_24_1521220770556"
+                    	}),
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_22_1521220770556",
+                    		"context": null,
+                    		"metadata": null,
+                    		"next_step": null,
+                    		"conditions": null,
+                    		"event_name": "focus",
+                    		"description": null,
+                    		"dialog_node": "handler_24_1521220770556",
+                    		"previous_sibling": null
+                    	})
+                  ]),
+          node({
+        		"type": "slot",
+        		"title": null,
+        		"output": {},
+        		"parent": "node_1_1520357929976",
+        		"context": null,
+        		"metadata": {
+        			"_customization": {
+        				"mcr": true
+        			}
+        		},
+        		"variable": "$ct",
+        		"next_step": null,
+        		"conditions": null,
+        		"description": null,
+        		"dialog_node": "slot_2_1520358026402",
+        		"previous_sibling": "slot_9_1520358290116"
+        	}, [
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_2_1520358026402",
+                    		"context": {
+                    			"ct": "poor street conditions"
+                    		},
+                    		"metadata": {},
+                    		"next_step": null,
+                    		"conditions": "#report-street-condition",
+                    		"event_name": "input",
+                    		"description": null,
+                    		"dialog_node": "handler_3_1520358026402",
+                    		"previous_sibling": "handler_4_1520358026402"
+                    	}),
+                      node({
+                    		"type": "event_handler",
+                    		"title": null,
+                    		"output": {},
+                    		"parent": "slot_2_1520358026402",
+                    		"context": null,
+                    		"metadata": {},
+                    		"next_step": null,
+                    		"conditions": null,
+                    		"event_name": "focus",
+                    		"description": null,
+                    		"dialog_node": "handler_4_1520358026402",
+                    		"previous_sibling": null
+                    	})
+                  ]),
+          node({
+        		"type": "slot",
+        		"title": null,
+        		"output": {},
+        		"parent": "node_1_1520357929976",
+        		"context": null,
+        		"metadata": {},
+        		"variable": "$agency",
+        		"next_step": null,
+        		"conditions": null,
+        		"description": null,
+        		"dialog_node": "slot_10_1521220551613",
+        		"previous_sibling": "slot_4_1521220486223"
+        	}, [
+                        node({
+                      		"type": "event_handler",
+                      		"title": null,
+                      		"output": {},
+                      		"parent": "slot_10_1521220551613",
+                      		"context": {
+                      			"ct": "graffiti",
+                      			"agency": "dsny",
+                      			"entity": "@dsny.value"
+                      		},
+                      		"metadata": {},
+                      		"next_step": null,
+                      		"conditions": "#report-graffiti && @dsny",
+                      		"event_name": "input",
+                      		"description": null,
+                      		"dialog_node": "handler_11_1521220551613",
+                      		"previous_sibling": "handler_12_1521220551613"
+                      	}),
+                        node({
+                      		"type": "event_handler",
+                      		"title": null,
+                      		"output": {},
+                      		"parent": "slot_10_1521220551613",
+                      		"context": null,
+                      		"metadata": {},
+                      		"next_step": null,
+                      		"conditions": null,
+                      		"event_name": "focus",
+                      		"description": null,
+                      		"dialog_node": "handler_12_1521220551613",
+                      		"previous_sibling": null
+                      	})
+                    ]),
+          node({
+        		"type": "slot",
+        		"title": null,
+        		"output": {},
+        		"parent": "node_1_1520357929976",
+        		"context": null,
+        		"metadata": {},
+        		"variable": "$agency",
+        		"next_step": null,
+        		"conditions": null,
+        		"description": null,
+        		"dialog_node": "slot_4_1521220486223",
+        		"previous_sibling": null
+        	}, [
+                        node({
+                      		"type": "event_handler",
+                      		"title": null,
+                      		"output": {},
+                      		"parent": "slot_4_1521220486223",
+                      		"context": {
+                      			"agency": "dpr",
+                      			"entity": "@dpr.value"
+                      		},
+                      		"metadata": {},
+                      		"next_step": null,
+                      		"conditions": "#report-damaged-tree && @dpr",
+                      		"event_name": "input",
+                      		"description": null,
+                      		"dialog_node": "handler_5_1521220486223",
+                      		"previous_sibling": "handler_6_1521220486223"
+                      	}),
+                        node({
+                      		"type": "event_handler",
+                      		"title": null,
+                      		"output": {},
+                      		"parent": "slot_4_1521220486223",
+                      		"context": null,
+                      		"metadata": {},
+                      		"next_step": null,
+                      		"conditions": null,
+                      		"event_name": "focus",
+                      		"description": null,
+                      		"dialog_node": "handler_6_1521220486223",
+                      		"previous_sibling": null
+                      	})
+                    ])
+        ])
   ];
 }
-//TODO: *** Need event handler for slots in Get Issue ^^ ***
 
 
+const proceed_with_issue_report = () => {
+  node(
+    {
+      "type": "standard",
+      "title": "proceed with issue report",
+      "output": {
+        "text": {
+          "values": ["Ok, great."],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_16_1520457025654",
+      "context": null,
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "body",
+        "dialog_node": "node_27_1520358866193"
+      },
+      "conditions": "$ct != null && $c_ct != null",
+      "description": null,
+      "dialog_node": "node_34_1520458045780",
+      "previous_sibling": null
+    }
+  )
+}
 
-const confirmation_issue = () => {
+const get_another_issue_report = () => {
+  node(
+    {
+      "type": "standard",
+      "title": "get another issue report",
+      "output": {
+        "text": {
+          "values": ["Oops. Let's try again. Please describe, in a few words, the issue you'd like to report to 311."],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_16_1520457025654",
+      "context": null,
+      "metadata": {},
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "user_input",
+        "dialog_node": "node_1_1520357929976"
+      },
+      "conditions": "true",
+      "description": null,
+      "dialog_node": "node_35_1520458089865",
+      "previous_sibling": "node_34_1520458045780"
+    }
+  )
+}
+
+
+const process_issue_confirmation = () => {
   return [
     node(
       {
     		"type": "frame",
-    		"title": "confirmation_issue",
+    		"title": "process_issue_confirmation",
     		"output": {
     			"text": {
     				"values": []
@@ -1359,59 +1811,94 @@ const confirmation_issue = () => {
     		"digress_out_slots": "not_allowed"
     	},
       [
-        node(
-          {
-        		"type": "standard",
-        		"title": "proceed with issue report",
-        		"output": {
-        			"text": {
-        				"values": ["Ok, great."],
-        				"selection_policy": "sequential"
-        			}
-        		},
-        		"parent": "node_16_1520457025654",
-        		"context": null,
-        		"metadata": {},
-        		"next_step": {
-        			"behavior": "jump_to",
-        			"selector": "body",
-        			"dialog_node": "node_27_1520358866193"
-        		},
-        		"conditions": "$ct != null && $c_ct != null",
-        		"description": null,
-        		"dialog_node": "node_34_1520458045780",
-        		"previous_sibling": null
-        	}
-        ),
-        node(
-          {
-        		"type": "standard",
-        		"title": "get another issue report",
-        		"output": {
-        			"text": {
-        				"values": ["Oops. Let's try again. Please describe, in a few words, the issue you'd like to report to 311."],
-        				"selection_policy": "sequential"
-        			}
-        		},
-        		"parent": "node_16_1520457025654",
-        		"context": null,
-        		"metadata": {},
-        		"next_step": {
-        			"behavior": "jump_to",
-        			"selector": "user_input",
-        			"dialog_node": "node_1_1520357929976"
-        		},
-        		"conditions": "true",
-        		"description": null,
-        		"dialog_node": "node_35_1520458089865",
-        		"previous_sibling": "node_34_1520458045780"
-        	}
-        )
-      ]
-    )
+            node({
+              //**** This node is disabled... can I remove it?
+          		"type": "response_condition",
+          		"title": null,
+          		"output": {
+          			"text": {
+          				"values": []
+          			}
+          		},
+          		"parent": "node_16_1520457025654",
+          		"context": null,
+              // DISABLED???!
+          		"disabled": true,
+          		"metadata": {},
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "node_58_1521227765093",
+          		"previous_sibling": "node_35_1520458089865"
+          	}),
+            node({
+              "type": "slot",
+              "title": null,
+              "output": {},
+              "parent": "node_16_1520457025654",
+              "context": null,
+              "metadata": {},
+              "variable": "$c_ct",
+              "next_step": null,
+              "conditions": null,
+              "description": null,
+              "dialog_node": "slot_17_1520457096281",
+              "previous_sibling": "node_58_1521227765093"
+            }, [
+                  node({
+                    "type": "event_handler",
+                    "title": null,
+                    "output": {},
+                    "parent": "slot_17_1520457096281",
+                    "context": {
+                      "c_ct": "$ct",
+                      "c_agency": "$agency"
+                    },
+                    "metadata": {},
+                    "next_step": null,
+                    "conditions": "#affirmative",
+                    "event_name": "input",
+                    "description": null,
+                    "dialog_node": "handler_18_1520457096281",
+                    "previous_sibling": "handler_19_1520457096281"
+                  })
+            ]),
+            node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_16_1520457025654",
+          		"context": null,
+          		"metadata": {},
+          		"variable": "$ct",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_22_1520457485837",
+          		"previous_sibling": "slot_17_1520457096281"
+          	}, [
+                    node({
+                		"type": "event_handler",
+                		"title": null,
+                		"output": {},
+                		"parent": "slot_22_1520457485837",
+                		"context": {
+                			"ct": null
+                		},
+                		"metadata": {},
+                		"next_step": null,
+                		"conditions": "#negative",
+                		"event_name": "input",
+                		"description": null,
+                		"dialog_node": "handler_23_1520457485837",
+                		"previous_sibling": "handler_24_1520457485837"
+                	})
+              ]),
+            proceed_with_issue_report(),
+            get_another_issue_report()
+    ])
   ];
 }
-//TODO: *** Need event handlers for #affirmative and #negative for confirmation_issue ^^ ***
 
 const confirm_the_issue = () => {
   return [
@@ -1434,8 +1921,43 @@ const confirm_the_issue = () => {
       "dialog_node": "node_15_1520456922489",
       "digress_out": "allow_all",
       "previous_sibling": "node_1_1520357929976"
-    },[
-      confirmation_issue()
+    }, [
+        node({
+      		"type": "response_condition",
+      		"title": null,
+      		"output": {
+      			"text": {
+      				"values": ["I have a report about '$ct'. Is that right?"],
+      				"selection_policy": "sequential"
+      			}
+      		},
+      		"parent": "node_15_1520456922489",
+      		"context": null,
+      		"metadata": {},
+      		"next_step": null,
+      		"conditions": "$agency == null",
+      		"description": null,
+      		"dialog_node": "node_27_1521221715274",
+      		"previous_sibling": null
+      	}),
+        node({
+      		"type": "response_condition",
+      		"title": null,
+      		"output": {
+      			"text": {
+      				"values": ["I have a report about '$ct', specifically about '$entity'. Is that right?"]
+      			}
+      		},
+      		"parent": "node_15_1520456922489",
+      		"context": null,
+      		"metadata": {},
+      		"next_step": null,
+      		"conditions": "$agency != \"null\"",
+      		"description": null,
+      		"dialog_node": "node_28_1521221791354",
+      		"previous_sibling": "node_27_1521221715274"
+      	}),
+        process_issue_confirmation()
     ])
   ];
 }
@@ -1522,8 +2044,7 @@ const no_landmark_given = () => {
 
 const get_address = () => {
   return [
-    node (
-      {
+    node ({
     		"type": "frame",
     		"title": "Get Address",
     		"output": {
@@ -1547,11 +2068,148 @@ const get_address = () => {
     		"digress_out": "allow_all",
     		"previous_sibling": "node_27_1520358866193",
     		"digress_out_slots": "not_allowed"
-    	},
-      get_landmark_address(),
-      no_landmark_given()
-    )
+    	}, [
+            node({
+          		"type": "event_handler",
+          		"title": null,
+          		"output": {
+          			"text": {
+          				"values": ["I'll need a street number, street name, and a street word (like \"road\", \"st\", \"blvd\", \"way\", etc.). Or, you can give me the name of a Manhattan landmark."],
+          				"selection_policy": "sequential"
+          			}
+          		},
+          		"parent": "node_6_1521146866801",
+          		"context": null,
+          		"metadata": {},
+          		"next_step": null,
+          		"conditions": null,
+          		"event_name": "focus",
+          		"description": null,
+          		"dialog_node": "handler_7_1521146883633",
+          		"previous_sibling": "node_37_1521147552788"
+          	}),
+            node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_6_1521146866801",
+          		"context": null,
+          		"metadata": {},
+          		"variable": "$landmark",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_8_1521146883638",
+          		"previous_sibling": "handler_7_1521146883633"
+          	}, [
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_8_1521146883638",
+                  		"context": {
+                  			"landmark": "@landmark",
+                  			"street_name": "placeholder",
+                  			"street_word": "placeholder",
+                  			"street_number": "placeholder",
+                  			"sub_component": "placeholder"
+                  		},
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": "@landmark",
+                  		"event_name": "input",
+                  		"description": null,
+                  		"dialog_node": "handler_9_1521146883638",
+                  		"previous_sibling": "handler_10_1521146883638"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_8_1521146883638",
+                  		"context": null,
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": null,
+                  		"event_name": "focus",
+                  		"description": null,
+                  		"dialog_node": "handler_10_1521146883638",
+                  		"previous_sibling": null
+                  	})
+            ]),
+            node({
+              "type": "slot",
+              "title": null,
+              "output": {},
+              "parent": "node_6_1521146866801",
+              "context": null,
+              "metadata": {},
+              "variable": "$sub_component",
+              "next_step": null,
+              "conditions": null,
+              "description": null,
+              "dialog_node": "slot_20_1521146903715",
+              "previous_sibling": "slot_8_1521146883638"
+            }),
+            node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_6_1521146866801",
+          		"context": null,
+          		"metadata": {
+          			"_customization": {
+          				"mcr": true
+          			}
+          		},
+          		"variable": "$street_number",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_11_1521146898185",
+          		"previous_sibling": "slot_20_1521146903715"
+          	}),
+            node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_6_1521146866801",
+          		"context": null,
+          		"metadata": {
+          			"_customization": {
+          				"mcr": true
+          			}
+          		},
+          		"variable": "$street_name",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_14_1521146900539",
+          		"previous_sibling": "slot_11_1521146898185"
+          	}),
+            node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_6_1521146866801",
+          		"context": null,
+          		"metadata": {
+          			"_customization": {
+          				"mcr": true
+          			}
+          		},
+          		"variable": "$street_word",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_17_1521146902279",
+          		"previous_sibling": "slot_14_1521146900539"
+          	}),
+            get_landmark_address(),
+            no_landmark_given()
+        ])
   ];
+  //TODO - *** Need event handlers for each of the slots for get_address ^^ ***
 }
 
 const proceed_with_address = () => {
@@ -1800,7 +2458,7 @@ const exportDialogTree = () => {
   let groups = [
 
     welcome(),
-    
+
     get_issue(),
 
     confirm_the_issue(),
