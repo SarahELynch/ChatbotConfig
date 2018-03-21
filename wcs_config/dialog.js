@@ -50,1224 +50,6 @@ const export_file = (path) => {
 };
 
 
-/*
-
-The following methods are OLD - from old non-slots design:
-
-
-const get_reset_context = () => {
-  return {
-    address: _address_uninitialized,
-    c_address: _address_uninitialized,
-    ct: "",
-    ct_friendly: "",
-    c_ct: "",
-    c_ct_friendly: "",
-    entity: "",
-    entity_friendly: "",
-    c_entity: "",
-    c_entity_friendly: "",
-    agency: "",
-    failed_ct: 0,
-    failed_address: 0,
-    landmark: "",
-    landmark_friendly: "",
-    landmark_address: ""
-  };
-};
-
-const get_greeting = () => {
-  return [
-    node({
-      conditions: "intents[0] == 'greeting' && intents[0].confidence > 0.7",
-      text: props.get('greeting'),
-    })
-  ];
-};
-
-const get_function_question = () => {
-  return [
-    node({
-      conditions: "intent == 'what-function'",
-      text: props.get('explain_purpose'),
-    })
-  ];
-};
-
-const get_generic_report = () => {
-  return [
-    node({
-      dialog_node: "generic-report",
-      conditions: "intent == 'generic-report'",
-      text: props.get('more_detail'),
-    })
-  ];
-};
-
-const get_unclassifiable = () => {
-  return [
-    node({
-      dialog_node: "unclassifiable",
-      conditions: "context['ct'] == ''",
-      text: props.get('retry_unclassifiable'),
-      context: {
-        failed_ct: "<? context['failed_ct'] + 3 ?>"
-      }
-    })
-  ];
-};
-
-const get_misclassified = () => {
-  return [
-    node({
-      dialog_node: "misclassified",
-      conditions: "context['c_ct'] == ''",
-      text: props.get('retry_misclassified'),
-      context: {
-        ct: ''
-      }
-    })
-  ];
-};
-
-const get_failed_ct = () => {
-  return [
-    node({
-      dialog_node: "failed-ct",
-      conditions: `context['failed_ct'] >= ${_ct_failure_limit}`,
-      text: props.get('call-human'),
-      //Clear context for the next conversation in the app
-      context: get_reset_context(),
-      next_step: {
-        dialog_node: "generic-resource",
-        selector: "body"
-      }
-    }),
-    node({
-      dialog_node: "generic-resource",
-      text: props.get('resource-generic'),
-      selector: "body"
-    })
-  ];
-};
-
-//generic node-generating fxn for noise & DEP entities
-const get_noise_dep_entities = () => {
-  let result = [];
-  let _entities = _entities_dep;
-  for (let i in _entities) {
-    result.push(
-      node({
-        conditions: `intent == 'report-noise' && entities['` + _entities[i] + `'] && context['failed_ct'] <= ${_ct_failure_limit}`,
-        dialog_node: "noise-" + _entities[i],
-        context: {
-          ct: 'report-noise',
-          ct_friendly: _intent_phrases.get('report-noise'),
-          entity: _entities[i],
-          entity_friendly: _entity_phrases.get(_entities[i])
-        },
-        text: props.get('confirm-noise-entity')
-      }, [
-        node({
-          conditions: "intent == 'affirmative' || entities['affirmative']",
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dep",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          text: props.get('reference-dep'),
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "intent == 'negative' || entities['negative']",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: `context['address'] != '${_address_uninitialized}'`,
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dep",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "true",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>",
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        })
-      ])
-    );
-  }
-  return result
-};
-
-//generic node-generating fxn for noise & NYPD entities
-const get_noise_nypd_entities = () => {
-  let result = [];
-  let _entities = _entities_nypd;
-  for (let i in _entities) {
-    result.push(
-      node({
-        conditions: `intent == 'report-noise' && entities['` + _entities[i] + `'] && context['failed_ct'] <= ${_ct_failure_limit}`,
-        dialog_node: "noise-" + _entities[i],
-        context: {
-          ct: 'report-noise',
-          ct_friendly: _intent_phrases.get('report-noise'),
-          entity: _entities[i],
-          entity_friendly: _entity_phrases.get(_entities[i])
-        },
-        text: props.get('confirm-noise-entity')
-      }, [
-        node({
-          conditions: "intent == 'affirmative' || entities['affirmative']",
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "nypd",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          text: props.get('reference-nypd'),
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "intent == 'negative' || entities['negative']",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: `context['address'] != '${_address_uninitialized}'`,
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "nypd",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "true",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>",
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        })
-      ])
-    );
-  }
-  return result
-};
-
-
-//custom node-generating fxn for noise & alarm, with follow-up question
-const get_noise_alarm = () => {
-    return [
-      node({
-        conditions: `intent == 'report-noise' && entities['alarm']  && context['failed_ct'] <= ${_ct_failure_limit}`,
-        dialog_node: "noise-alarm",
-        context: {
-          ct: 'report-noise',
-          ct_friendly: _intent_phrases.get('report-noise'),
-          entity: 'alarm',
-          entity_friendly: _entity_phrases.get('alarm')
-        },
-        text: props.get('confirm-noise-entity')
-      }, [
-        node({
-          conditions: "intent == 'affirmative' || entities['affirmative']",
-          text: props.get('noise-alarm-follow-up'),
-          context: {
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          }
-        },
-        [
-          node({
-            conditions: "intent == 'affirmative' || entities['affirmative']",
-            context: {
-              c_ct: "<? context['ct'] ?>",
-              c_ct_friendly: "<? context['ct_friendly'] ?>",
-              c_entity: "<? context['entity'] ?>",
-              c_entity_friendly: "<? context['entity_friendly'] ?>",
-              agency: "nypd"
-            },
-            text: props.get('reference-nypd-alarm-in-progress'),
-            next_step: {
-              dialog_node: "0",
-              selector: "condition"
-            }
-          }),
-          node({
-            conditions: "intent == 'negative'",
-            context: {
-              c_ct: "<? context['ct'] ?>",
-              c_ct_friendly: "<? context['ct_friendly'] ?>",
-              c_entity: "<? context['entity'] ?>",
-              c_entity_friendly: "<? context['entity_friendly'] ?>",
-              agency: "dep"
-            },
-            text: props.get('reference-dep-alarm-past'),
-            next_step: {
-              dialog_node: "0",
-              selector: "condition"
-            }
-          })
-        ]),
-        node({
-          conditions: "intent == 'negative' || entities['negative']",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: `context['address'] != '${_address_uninitialized}'`,
-          context: {
-            //don't assign entity or agency...
-            //can't know which one applies without the follow up question
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "true",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        })
-      ])
-    ];
-};
-
-
-//custom node-generating fxn for 'graffiti' && 'removal'
-const get_graffiti_dsny_entities = () => {
-    return [
-      node({
-        conditions: `intent == 'report-graffiti' && entities['removal']  && context['failed_ct'] <= ${_ct_failure_limit}`,
-        dialog_node: "graffiti-removal",
-        context: {
-          ct: 'report-graffiti',
-          ct_friendly: _intent_phrases.get('report-graffiti'),
-          entity: "removal",
-          entity_friendly: _entity_phrases.get('removal')
-        },
-        text: props.get('confirm-graffiti-entity')
-      }, [
-        node({
-          conditions: "intent == 'affirmative' || entities['affirmative']",
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dsny",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          text: props.get('reference-dsny'),
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "intent == 'negative' || entities['negative']",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: `context['address'] != '${_address_uninitialized}'`,
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dsny",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "true",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        })
-      ])
-    ];
-};
-
-
-//generic node-generating fxn for street condition & DOT entities
-const get_street_condition_dot_entities = () => {
-  let result = [];
-  let _entities = _entities_dot;
-  for (let i in _entities) {
-    result.push(
-      node({
-        conditions: `intent == 'report-street-condition' && entities['` + _entities[i] + `'] && context['failed_ct'] <= ${_ct_failure_limit}`,
-        dialog_node: "street-condition-" + _entities[i],
-        context: {
-          ct: 'report-street-condition',
-          ct_friendly: _intent_phrases.get('report-street-condition'),
-          entity: _entities[i],
-          entity_friendly: _entity_phrases.get(_entities[i])
-        },
-        text: props.get('confirm-street-condition-entity')
-      }, [
-        node({
-          conditions: "intent == 'affirmative' || entities['affirmative']",
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dot",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          text: props.get('reference-dot'),
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "intent == 'negative' || entities['negative']",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: `context['address'] != '${_address_uninitialized}'`,
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dot",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "true",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        })
-      ])
-    );
-  }
-  return result
-};
-
-//generic node-generating fxn for damaged tree & DPR entities
-const get_damaged_tree_dpr_entities = () => {
-  let result = [];
-  let _entities = _entities_dpr;
-  for (let i in _entities) {
-    result.push(
-      node({
-        conditions: `intent == 'report-damaged-tree' && entities['` + _entities[i] + `'] && context['failed_ct'] <= ${_ct_failure_limit}`,
-        dialog_node: "damaged-tree-" + _entities[i],
-        context: {
-          ct: 'report-damaged-tree',
-          ct_friendly: _intent_phrases.get('report-damaged-tree'),
-          entity: _entities[i],
-          entity_friendly: _entity_phrases.get(_entities[i])
-        },
-        text: props.get('confirm-damaged-tree-entity')
-      }, [
-        node({
-          conditions: "intent == 'affirmative' || entities['affirmative']",
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dpr",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          text: props.get('reference-dpr'),
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "intent == 'negative' || entities['negative']",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: `context['address'] != '${_address_uninitialized}'`,
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            c_entity: "<? context['entity'] ?>",
-            c_entity_friendly: "<? context['entity_friendly'] ?>",
-            agency: "dpr",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "true",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-        },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        })
-      ])
-    );
-  }
-  return result
-};
-
-
-//custom node-generating fxn for 'graffiti' or 'graffiti' & 'in_progress_graffiti', with follow-up question
-const get_graffiti = () => {
-    return [
-      node({
-        conditions: `intent == 'report-graffiti'  && context['failed_ct'] <= ${_ct_failure_limit}`,
-        dialog_node: "graffiti-and-in_progress_graffiti",
-        context: {
-          ct: 'report-graffiti',
-          ct_friendly: _intent_phrases.get('report-graffiti'),
-          entity: 'in_progress_graffiti',
-          entity_friendly: _entity_phrases.get('in_progress_graffiti')
-        },
-        text: props.get('confirm-graffiti')
-      }, [
-        node({
-          conditions: "intent == 'affirmative' || entities['affirmative']",
-          context: {
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          text: props.get('graffiti-in-progress-follow-up')
-        },
-        [
-          node({
-            conditions: "intent == 'affirmative' || entities['affirmative']",
-            context: {
-              c_entity: "<? context['entity'] ?>",
-              c_entity_friendly: "<? context['entity_friendly'] ?>",
-              agency: "911"
-            },
-            text: props.get('reference-911'),
-            next_step: {
-              dialog_node: "0",
-              selector: "condition"
-            }
-          }),
-          node({
-            conditions: "intent == 'negative'",
-            context: {
-              entity: '',
-              entity_friendly: ''
-            },
-            text: props.get('reference-agency-generic'),
-            next_step: {
-              dialog_node: "0",
-              selector: "condition"
-            }
-          })
-        ]),
-        node({
-          conditions: "intent == 'negative' || entities['negative']",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: `context['address'] != '${_address_uninitialized}'`,
-          context: {
-            //don't assign entity or agency
-            //can't know the status (in progress, or past) without follow up
-            c_ct: "<? context['ct'] ?>",
-            c_ct_friendly: "<? context['ct_friendly'] ?>",
-            entity: '',
-            entity_friendly: '',
-            failed_ct: "<? context['failed_ct'] - 1 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        }),
-        node({
-          conditions: "true",
-          context: {
-            failed_ct: "<? context['failed_ct'] + 2 ?>"
-          },
-          next_step: {
-            dialog_node: "0",
-            selector: "condition"
-          }
-        })
-      ])
-    ];
-};
-
-
-//custom function for generating intent-only node for noise
-const get_noise = () => {
-        return [
-          node({
-            conditions: `intent == 'report-noise' && context['failed_ct'] <= ${_ct_failure_limit}`,
-            dialog_node: "noise",
-            text: props.get("confirm-noise"),
-            context: {
-              ct: 'report-noise',
-              ct_friendly: _intent_phrases.get('report-noise'),
-            }
-          }, [
-            node({
-              conditions: "intent == 'affirmative' || entities['affirmative']",
-              context: {
-                c_ct: "<? context['ct'] ?>",
-                c_ct_friendly: "<? context['ct_friendly'] ?>",
-                failed_ct: "<? context['failed_ct'] - 1 ?>"
-              },
-              text: props.get('reference-agency-generic'),
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: "intent == 'negative' || entities['negative']",
-              context: {
-                failed_ct: "<? context['failed_ct'] + 2 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: `context['address'] != '${_address_uninitialized}'`,
-              context: {
-                c_ct: "<? context['ct'] ?>",
-                c_ct_friendly: "<? context['ct_friendly'] ?>",
-                failed_ct: "<? context['failed_ct'] - 1 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: "true",
-              context: {
-                failed_ct: "<? context['failed_ct'] + 2 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            })
-          ])
-        ];
-};
-
-
-//custom function for generating intent-only node for street condition
-const get_street_condition = () => {
-        return [
-          node({
-            conditions: `intent == 'report-street-condition' && context['failed_ct'] <= ${_ct_failure_limit}`,
-            dialog_node: "street-condition",
-            text: props.get("confirm-street-condition"),
-            context: {
-              ct: 'report-street-condition',
-              ct_friendly: _intent_phrases.get('report-street-condition'),
-            }
-          }, [
-            node({
-              conditions: "intent == 'affirmative' || entities['affirmative']",
-              context: {
-                c_ct: "<? context['ct'] ?>",
-                c_ct_friendly: "<? context['ct_friendly'] ?>",
-                failed_ct: "<? context['failed_ct'] - 1 ?>"
-              },
-              text: props.get('reference-agency-generic'),
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: "intent == 'negative' || entities['negative']",
-              context: {
-                failed_ct: "<? context['failed_ct'] + 2 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: `context['address'] != '${_address_uninitialized}'`,
-              context: {
-                c_ct: "<? context['ct'] ?>",
-                c_ct_friendly: "<? context['ct_friendly'] ?>",
-                failed_ct: "<? context['failed_ct'] - 1 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: "true",
-              context: {
-                failed_ct: "<? context['failed_ct'] + 2 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            })
-          ])
-        ];
-};
-
-//custom function for generating intent-only node for damaged tree
-const get_damaged_tree = () => {
-        return [
-          node({
-            conditions: `intent == 'report-damaged-tree' && context['failed_ct'] <= ${_ct_failure_limit}`,
-            dialog_node: "damaged-tree",
-            text: props.get("confirm-damaged-tree"),
-            context: {
-              ct: 'report-damaged-tree',
-              ct_friendly: _intent_phrases.get('report-damaged-tree'),
-            }
-          }, [
-            node({
-              conditions: "intent == 'affirmative' || entities['affirmative']",
-              context: {
-                c_ct: "<? context['ct'] ?>",
-                c_ct_friendly: "<? context['ct_friendly'] ?>",
-                failed_ct: "<? context['failed_ct'] - 1 ?>"
-              },
-              text: props.get('reference-agency-generic'),
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: "intent == 'negative' || entities['negative']",
-              context: {
-                failed_ct: "<? context['failed_ct'] + 2 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: `context['address'] != '${_address_uninitialized}'`,
-              context: {
-                c_ct: "<? context['ct'] ?>",
-                c_ct_friendly: "<? context['ct_friendly'] ?>",
-                failed_ct: "<? context['failed_ct'] - 1 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            }),
-            node({
-              conditions: "true",
-              context: {
-                failed_ct: "<? context['failed_ct'] + 2 ?>"
-              },
-              next_step: {
-                dialog_node: "0",
-                selector: "condition"
-              }
-            })
-          ])
-        ];
-};
-
-
-const get_failed_address_noise = () => {
-  return [
-    node({
-      dialog_node: "failed-address-noise",
-      conditions: `context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-noise' &&  context['c_address'] == ''  || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-noise' && context['c_address'] == '${_address_uninitialized}' || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-noise' && context['c_address'] == 'rejected'`,
-      text: props.get('call-human'),
-      //Clear context for the next conversation in the app
-      context: get_reset_context(),
-      next_step: {
-        dialog_node: "resource-noise",
-        selector: "body"
-      }
-    }),
-    node({
-      dialog_node: "resource-noise",
-      text: props.get('resource-noise')
-    })
-  ];
-};
-
-const get_failed_address_graffiti = () => {
-  return [
-    node({
-      dialog_node: "failed-address-graffiti",
-      conditions: `context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-graffiti' &&  context['c_address'] == ''  || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-graffiti' && context['c_address'] == '${_address_uninitialized}' || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-graffiti' && context['c_address'] == 'rejected'`,
-      text: props.get('call-human'),
-      //Clear context for the next conversation in the app
-      context: get_reset_context(),
-      next_step: {
-        dialog_node: "resource-graffiti",
-        selector: "body"
-      }
-    }),
-    node({
-      dialog_node: "resource-graffiti",
-      text: props.get('resource-graffiti')
-    })
-  ];
-};
-
-const get_failed_address_damaged_tree = () => {
-  return [
-    node({
-      dialog_node: "failed-address-damaged-tree",
-      conditions: `context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-damaged-tree' &&  context['c_address'] == ''  || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-damaged-tree' && context['c_address'] == '${_address_uninitialized}' || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-damaged-tree' && context['c_address'] == 'rejected'`,
-      text: props.get('call-human'),
-      //Clear context for the next conversation in the app
-      context: get_reset_context(),
-      next_step: {
-        dialog_node: "resource-damaged-tree",
-        selector: "body"
-      }
-    }),
-    node({
-      dialog_node: "resource-damaged-tree",
-      text: props.get('resource-damaged-tree')
-    })
-  ];
-};
-
-const get_failed_address_street_condition = () => {
-  return [
-    node({
-      dialog_node: "failed-address-street-condition",
-      conditions: `context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-street-condition' &&  context['c_address'] == ''  || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-street-condition' && context['c_address'] == '${_address_uninitialized}' || context['failed_address'] >= ${_address_failure_limit} && context['c_ct'] == 'report-street-condition' && context['c_address'] == 'rejected'`,
-      text: props.get('call-human'),
-      //Clear context for the next conversation in the app
-      context: get_reset_context(),
-      next_step: {
-        dialog_node: "resource-street-condition",
-        selector: "body"
-      }
-    }),
-    node({
-      dialog_node: "resource-street-condition",
-      text: props.get('resource-street-condition')
-    })
-  ];
-};
-
-const get_unusable_address = () => {
-      //when user has given an unusable/undecipherable address
-  return [
-    node({
-      dialog_node: "retry-unusable-address",
-      conditions: `context['address'] == '' && context['c_address'] == '${_address_uninitialized}' && context['c_ct'] != ''`,
-      text: props.get('retry-unusable-address'),
-      context: {
-        failed_address: "<? context['failed_address'] + 2 ?>"
-      }
-    })
-  ];
-};
-
-const get_rejected_address = () => {
-    //when user has rejected the collected address when asked for confirmation
-return [
-  node({
-    dialog_node: "retry-rejected-address",
-    conditions: "context['address'] == '' && context['c_address'] == 'rejected' && context['c_ct'] != '' || context['landmark_address'] == '' && context['c_address'] == 'rejected' && context['c_ct'] != ''",
-    context: {
-      c_address: _address_uninitialized
-    },
-    text: props.get('retry-rejected-address')
-  })
-  ];
-};
-
-const get_report_address = () => {
-  //when user has not attempted to give an address yet, but has confirmed a C.T.
-  return [
-    node({
-      dialog_node: "report-address",
-      conditions: `context['address'] == '${_address_uninitialized}' && context['c_address'] == '${_address_uninitialized}' && context['c_ct'] != ''`,
-      context: {
-        address: ''
-      },
-      text: props.get('get-address')
-    })
-  ];
-};
-
-const get_address_out_of_bounds = () => {
-  return [
-    node({
-      dialog_node: "address-not-in-manhattan",
-      conditions: `context['address'] != '' && context['address'] != '${_address_uninitialized}' && context['c_address'] == '${_address_uninitialized}' && context['c_ct'] != '' && context['in_manhattan'] == false`,
-      text: props.get("address-out-of-bounds"),
-      context: {
-        address: _address_uninitialized,
-        failed_address: "<? context['failed_address'] + 1 ?>"
-      },
-      next_step: {
-        dialog_node: "0",
-        selector: "condition"
-      }
-    })
-  ];
-};
-
-const get_confirm_address = () => {
-  //when user has provided a usable address (located within manhattan), but has not yet confirmed it
-  return [
-    node({
-      dialog_node: "confirm-address-in-manhattan",
-      conditions: `context['address'] != '' && context['address'] != '${_address_uninitialized}' && context['c_address'] == '${_address_uninitialized}' && context['c_ct'] != '' && context['in_manhattan'] == true && context['failed_address'] <= ${_address_failure_limit}`,
-      text: props.get('confirm-address')
-    }, [
-      node({
-        conditions: "intent == 'affirmative' || entities['affirmative']",
-        context: {
-          c_address: "<? context['address'] ?>",
-          failed_address: "<? context['failed_address'] - 1 ?>"
-        },
-        next_step: {
-          dialog_node: "0",
-          selector: "condition"
-        }
-      }),
-      node({
-        //set a confidence threshold, in case user's input contains a negative word and an address, like "No, it's at 123 main street/empire state building"
-        conditions: `intents[0] == 'negative' && intents[0].confidence > ${_negative_intent_confidence_threshold}`,
-        context: {
-          address: '',
-          c_address: 'rejected',
-          failed_address: "<? context['failed_address'] + 1 ?>"
-        },
-        next_step: {
-          dialog_node: "0",
-          selector: "condition"
-        }
-      }),
-      node({
-      //user's input will meet this condition in all other cases ...
-      // re-evaluation of context is required
-      conditions: "true",
-       context: {
-        failed_address: "<? context['failed_address'] + 1 ?>"
-      },
-      next_step: {
-        dialog_node: "0",
-        selector: "condition"
-      }
-    })
-    ])
-  ];
-};
-
-const get_landmark_address = () => {
-  let result = [];
-      for(let entity of _landmark_entites) {
-      result.push(node({
-        dialog_node: "get-landmark-address-" + entity.value,
-        conditions: `context['landmark'] == '' && entities['landmark'] && entities['landmark'].value == '${entity.value}'`,
-        context: {
-          landmark: entity.value,
-          landmark_friendly: _landmark_phrases.get(entity.value),
-          landmark_address: _landmark_addresses.get(entity.value),
-          c_address: _address_uninitialized
-        },
-        next_step: {
-          dialog_node: "0",
-          selector: "condition"
-        }
-      }));
-    }
-  return result;
-};
-
-
-const get_confirm_landmark_address = () => {
-  //when user has provided a usable address, but has not yet confirmed it
-  return [
-    node({
-      dialog_node: "confirm-landmark-address",
-      conditions: `context['landmark_address'] != '' && context['landmark_address'] != '${_address_uninitialized}' && context['c_address'] == '${_address_uninitialized}' && context['c_ct'] != '' && context['landmark'] != '' && context['failed_address'] <= ${_address_failure_limit}`,
-      text: props.get('confirm-address-landmark')
-    }, [
-      node({
-        conditions: "intent == 'affirmative' || entities['affirmative']",
-        context: {
-          c_address: "<? context['landmark_address'] ?>",
-          failed_address: "<? context['failed_address'] - 1 ?>"
-        },
-        next_step: {
-          dialog_node: "0",
-          selector: "condition"
-        }
-      }),
-      node({
-        //set a confidence threshold, in case user's input contains a negative word and an address, like "No, it's at 123 main street/empire state building"
-        conditions: `intents[0] == 'negative' && intents[0].confidence > ${_negative_intent_confidence_threshold}`,
-        context: {
-          landmark_address: '',
-          c_address: 'rejected',
-          landmark: '',
-          landmark_friendly: '',
-          failed_address: "<? context['failed_address'] + 1 ?>"
-        },
-        next_step: {
-          dialog_node: "0",
-          selector: "condition"
-        }
-      }),
-      node({
-        //set a confidence threshold, in case user's input contains a negative word and an address, like "No, it's at 123 main street/empire state building"
-        conditions: "entities['landmark']",
-        context: {
-          landmark_address: '',
-          landmark: '',
-          landmark_friendly: '',
-          failed_address: "<? context['failed_address'] + 1 ?>"
-        },
-        next_step: {
-          dialog_node: "0",
-          selector: "condition"
-        }
-      }),
-      node({
-        //check if street address found in the input (Note: context['address'], NOT context['landmark_address'])
-      conditions: `context['address'] != '' && context['address'] != '${_address_uninitialized}'`,
-      context: {
-        landmark: '',
-        landmark_friendly: '',
-        failed_address: "<? context['failed_address'] + 1 ?>"
-      },
-      next_step: {
-        dialog_node: "0",
-        selector: "condition"
-        }
-      }),
-      node({
-        //user's input will meet this condition in all other cases ...
-        // re-evaluation of context is required
-      conditions: 'true',
-      context: {
-        failed_address: "<? context['failed_address'] + 1 ?>"
-      },
-      next_step: {
-        dialog_node: "0",
-        selector: "condition"
-      }
-    })
-    ])
-  ];
-};
-
-
-const get_report_cs = () => {
-  return [
-    node({
-      dialog_node: "report-cs",
-      conditions: "context['cs'] == '' && context['c_ct'] != ''",
-      text: props.get('get_cs')
-    })
-  ];
-};
-
-const get_confirm_cs = () => {
-  return [
-    node({
-      dialog_node: "confirm-cs",
-      conditions: "context['c_cs'] == '' && context['cs'] != '' && context['c_ct'] != ''",
-      text: props.get('confirm_cs')
-    }, [
-      node({
-        conditions: "intent == 'affirmative' || entities['affirmative']",
-        context: {
-          c_cs: "<? context['cs'] ?>"
-        },
-        next_step: {
-          dialog_node: "0",
-          selector: "condition"
-        }
-      }),
-      node({
-        conditions: "intent == 'negative'",
-        next_step: {
-          dialog_node: "confirm-cs",
-          selector: "body"
-        }
-      }),
-      node({
-        conditions: "intent == 'negative'",
-        next_step: {
-          dialog_node: "report-cs",
-          selector: "body"
-        }
-      })
-    ])
-  ];
-};
-
-const get_success_generic = () => {
-  return [
-    node({
-      conditions: "context['c_address'] != '' && context['c_address'] != 'rejected' && context['c_ct'] != ''",
-      dialog_node: "report-success-generic",
-      text: props.get('end-no-entity'),
-      next_step: {
-        dialog_node: "get-addtl-report",
-        selector: "body"
-      }
-    })
-  ];
-};
-
-
-
-
-const get_issue_report = () => {
-  return [
-    node({
-      dialog_node: "get-issue-report",
-      conditions: `intent == 'affirmative' && context['address'] == '${_address_uninitialized}' && context['c_address'] == '${_address_uninitialized}' && context['ct'] == '' && context['c_ct'] == '' && context['failed_ct'] == 0 && context['failed_address'] == 0 && context['landmark'] == '' && context['landmark_address'] == ''`,
-      text: props.get('get-issue-report')
-    })
-    ];
-};
-
-
-const get_end_thanks = () => {
-  return [
-    node({
-      dialog_node: "end-thanks",
-      text: props.get('end-thanks')
-    })
-  ];
-};
-
-const get_default = () => {
-  return [
-    node({
-      conditions: "anything_else",
-      text: props.get('default')
-    })
-  ];
-};
-
-*/
-
 
 const welcome = () => {
   return [
@@ -2150,7 +932,38 @@ const get_address = () => {
               "description": null,
               "dialog_node": "slot_20_1521146903715",
               "previous_sibling": "slot_8_1521146883638"
-            }),
+            }, [
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_20_1521146903715",
+                  		"context": {
+                  			"sub_component": "<? input.text.extract('\\d+\\s(\\w)\\s',1) ?>"
+                  		},
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": "@sub_component",
+                  		"event_name": "input",
+                  		"description": null,
+                  		"dialog_node": "handler_21_1521146903715",
+                  		"previous_sibling": "handler_22_1521146903715"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_20_1521146903715",
+                  		"context": null,
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": null,
+                  		"event_name": "focus",
+                  		"description": null,
+                  		"dialog_node": "handler_22_1521146903715",
+                  		"previous_sibling": null
+                  	})
+            ]),
             node({
           		"type": "slot",
           		"title": null,
@@ -2168,7 +981,76 @@ const get_address = () => {
           		"description": null,
           		"dialog_node": "slot_11_1521146898185",
           		"previous_sibling": "slot_20_1521146903715"
-          	}),
+          	}, [
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_11_1521146898185",
+                  		"context": {
+                  			"street_number": "@sys-number"
+                  		},
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": "@sys-number",
+                  		"event_name": "input",
+                  		"description": null,
+                  		"dialog_node": "handler_12_1521146898185",
+                  		"previous_sibling": "handler_13_1521146898185"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": {
+                  				"values": ["Ok, street name is updated from <?event.previous_value?> to <?event.current_value?>."]
+                  			}
+                  		},
+                  		"parent": "slot_14_1521146900539",
+                  		"context": null,
+                  		"metadata": null,
+                  		"next_step": null,
+                  		"conditions": "event.previous_value != null && event.previous_value != event.current_value",
+                  		"event_name": "filled",
+                  		"description": null,
+                  		"dialog_node": "handler_31_1521147143364",
+                  		"previous_sibling": "handler_15_1521146900539"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": {
+                  				"values": ["Can I get a street number for that address? Ex: \"55\", \"1\", \"102\", etc."]
+                  			}
+                  		},
+                  		"parent": "slot_11_1521146898185",
+                  		"context": null,
+                  		"metadata": null,
+                  		"next_step": null,
+                  		"conditions": "true",
+                  		"event_name": "nomatch",
+                  		"description": null,
+                  		"dialog_node": "handler_26_1521147057621",
+                  		"previous_sibling": "handler_25_1521147057621"
+                  	}),
+                    {
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": "Can I get a street name for that address?"
+                  		},
+                  		"parent": "slot_14_1521146900539",
+                  		"context": null,
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": null,
+                  		"event_name": "focus",
+                  		"description": null,
+                  		"dialog_node": "handler_16_1521146900539",
+                  		"previous_sibling": null
+                  	}
+            ]),
             node({
           		"type": "slot",
           		"title": null,
@@ -2186,7 +1068,76 @@ const get_address = () => {
           		"description": null,
           		"dialog_node": "slot_14_1521146900539",
           		"previous_sibling": "slot_11_1521146898185"
-          	}),
+          	}, [
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": {
+                  				"values": ["Can I get a street name for that address? Ex: \"main\", \"mlk\", \"astor\", \"1st\", \"fifth\", etc."]
+                  			}
+                  		},
+                  		"parent": "slot_14_1521146900539",
+                  		"context": null,
+                  		"metadata": null,
+                  		"next_step": null,
+                  		"conditions": "true",
+                  		"event_name": "nomatch",
+                  		"description": null,
+                  		"dialog_node": "handler_32_1521147143364",
+                  		"previous_sibling": "handler_31_1521147143364"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_14_1521146900539",
+                  		"context": {
+                  			"street_name": "@street_name"
+                  		},
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": "@street_name",
+                  		"event_name": "input",
+                  		"description": null,
+                  		"dialog_node": "handler_15_1521146900539",
+                  		"previous_sibling": "handler_16_1521146900539"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": {
+                  				"values": ["Ok, street name is updated from <?event.previous_value?> to <?event.current_value?>."]
+                  			}
+                  		},
+                  		"parent": "slot_14_1521146900539",
+                  		"context": null,
+                  		"metadata": null,
+                  		"next_step": null,
+                  		"conditions": "event.previous_value != null && event.previous_value != event.current_value",
+                  		"event_name": "filled",
+                  		"description": null,
+                  		"dialog_node": "handler_31_1521147143364",
+                  		"previous_sibling": "handler_15_1521146900539"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": "Can I get a street name for that address?"
+                  		},
+                  		"parent": "slot_14_1521146900539",
+                  		"context": null,
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": null,
+                  		"event_name": "focus",
+                  		"description": null,
+                  		"dialog_node": "handler_16_1521146900539",
+                  		"previous_sibling": null
+                  	})
+            ]),
             node({
           		"type": "slot",
           		"title": null,
@@ -2204,12 +1155,80 @@ const get_address = () => {
           		"description": null,
           		"dialog_node": "slot_17_1521146902279",
           		"previous_sibling": "slot_14_1521146900539"
-          	}),
+          	}, [
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": {
+                  				"values": ["Ok, street word is updated from <?event.previous_value?> to <?event.current_value?>."]
+                  			}
+                  		},
+                  		"parent": "slot_17_1521146902279",
+                  		"context": null,
+                  		"metadata": null,
+                  		"next_step": null,
+                  		"conditions": "event.previous_value != null && event.previous_value != event.current_value",
+                  		"event_name": "filled",
+                  		"description": null,
+                  		"dialog_node": "handler_33_1521147206517",
+                  		"previous_sibling": "handler_18_1521146902279"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": {
+                  				"values": ["Can I get a street word for that address? Examples: \"st\", \"rd\", \"avenue\", \"place\", etc."]
+                  			}
+                  		},
+                  		"parent": "slot_17_1521146902279",
+                  		"context": null,
+                  		"metadata": null,
+                  		"next_step": null,
+                  		"conditions": "true",
+                  		"event_name": "nomatch",
+                  		"description": null,
+                  		"dialog_node": "handler_34_1521147206517",
+                  		"previous_sibling": "handler_33_1521147206517"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_17_1521146902279",
+                  		"context": {
+                  			"street_word": "@street_word"
+                  		},
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": "@street_word",
+                  		"event_name": "input",
+                  		"description": null,
+                  		"dialog_node": "handler_18_1521146902279",
+                  		"previous_sibling": "handler_19_1521146902279"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {
+                  			"text": "Can I get a street word for that address? Ex: \"st\", \"rd\", \"avenue\", \"place\", etc."
+                  		},
+                  		"parent": "slot_17_1521146902279",
+                  		"context": null,
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": null,
+                  		"event_name": "focus",
+                  		"description": null,
+                  		"dialog_node": "handler_19_1521146902279",
+                  		"previous_sibling": null
+                  	})
+            ]),
             get_landmark_address(),
             no_landmark_given()
         ])
   ];
-  //TODO - *** Need event handlers for each of the slots for get_address ^^ ***
 }
 
 const proceed_with_address = () => {
@@ -2274,8 +1293,7 @@ const get_another_address = () => {
 
 const confirmation_address = () => {
   return [
-    node(
-      {
+    node({
     		"type": "frame",
     		"title": "confirmation_address",
     		"output": {},
@@ -2291,11 +1309,126 @@ const confirmation_address = () => {
     		"description": null,
     		"dialog_node": "node_37_1520460846461",
     		"previous_sibling": null
-    	},
-      proceed_with_address(),
-      get_another_address()
-    )
-    //TODO: *** Need event handler/response_condition for #affirmative and #negative for confirmation_address ^^ ***
+    	}, [
+            node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_37_1520460846461",
+          		"context": null,
+          		"metadata": {},
+          		"variable": "$address",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_40_1520460846461",
+          		"previous_sibling": "node_39_1520460846461"
+          	}, [
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_40_1520460846461",
+                  		"context": {
+                  			"address": "$street_number $street_name $street_word"
+                  		},
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": "#affirmative",
+                  		"event_name": "input",
+                  		"description": null,
+                  		"dialog_node": "handler_42_1520460846461",
+                  		"previous_sibling": "handler_41_1520460846461"
+                  	}),
+                    node({
+                  		"type": "event_handler",
+                  		"title": null,
+                  		"output": {},
+                  		"parent": "slot_40_1520460846461",
+                  		"context": null,
+                  		"metadata": {},
+                  		"next_step": null,
+                  		"conditions": null,
+                  		"event_name": "focus",
+                  		"description": null,
+                  		"dialog_node": "handler_41_1520460846461",
+                  		"previous_sibling": null
+                  	})
+            ]),
+            node({
+          		"type": "slot",
+          		"title": null,
+          		"output": {},
+          		"parent": "node_37_1520460846461",
+          		"context": null,
+          		"metadata": {},
+          		"variable": "$street_number",
+          		"next_step": null,
+          		"conditions": null,
+          		"description": null,
+          		"dialog_node": "slot_43_1520460846461",
+          		"previous_sibling": "slot_40_1520460846461"
+          	}, [
+                  node({
+                		"type": "event_handler",
+                		"title": null,
+                		"output": {},
+                		"parent": "slot_43_1520460846461",
+                		"context": {
+                			"address": null,
+                			"landmark": null,
+                			"street_name": null,
+                			"street_word": null,
+                			"street_number": null,
+                			"landmark_address": null
+                		},
+                		"metadata": {},
+                		"next_step": null,
+                		"conditions": "#negative",
+                		"event_name": "input",
+                		"description": null,
+                		"dialog_node": "handler_45_1520460846461",
+                		"previous_sibling": "handler_44_1520460846461"
+                	}),
+                  // node({
+                  //   //TODO -  *** Does this belong here??? Seems very out of place in this node... ***
+                  //   //   *** Commenting this out for now, I think it is a mistake. Address rejection is handled in get_another_address node.
+                	// 	"type": "event_handler",
+                	// 	"title": null,
+                	// 	"output": {
+                	// 		"text": {
+                	// 			"values": ["Oops, let's try again. Tell me in a few words the issue you would like to report to 311."],
+                	// 			"selection_policy": "sequential"
+                	// 		}
+                	// 	},
+                	// 	"parent": "slot_43_1520460846461",
+                	// 	"context": null,
+                	// 	"metadata": {},
+                	// 	"next_step": null,
+                	// 	"conditions": null,
+                	// 	"event_name": "filled",
+                	// 	"description": null,
+                	// 	"dialog_node": "handler_46_1520460846461",
+                	// 	"previous_sibling": "handler_45_1520460846461"
+                	// }),
+                  node({
+                		"type": "event_handler",
+                		"title": null,
+                		"output": {},
+                		"parent": "slot_43_1520460846461",
+                		"context": null,
+                		"metadata": {},
+                		"next_step": null,
+                		"conditions": null,
+                		"event_name": "focus",
+                		"description": null,
+                		"dialog_node": "handler_44_1520460846461",
+                		"previous_sibling": null
+                	})
+            ]),
+            proceed_with_address(),
+            get_another_address()
+    ])
   ];
 }
 
@@ -2320,19 +1453,51 @@ const confirm_the_address = () => {
     		"dialog_node": "node_36_1520460846441",
     		"digress_out": "allow_all",
     		"previous_sibling": "node_6_1521146866801"
-    	}
-      //TODO: *** Need response_condition nodes for two conditions in ^^ (???) ***
-    ,
-      confirmation_address()
-    )
+    	}, [
+            node({
+          		"type": "response_condition",
+          		"title": null,
+          		"output": {
+          			"text": {
+          				"values": ["I have the address as ' $landmark_address ', which is the address for '$landmark'. Is that right?"]
+          			}
+          		},
+          		"parent": "node_36_1520460846441",
+          		"context": null,
+          		"metadata": {},
+          		"next_step": null,
+          		"conditions": "$landmark_address != null",
+          		"description": null,
+          		"dialog_node": "node_7_1520971063998",
+          		"previous_sibling": "node_37_1520460846461"
+          	}),
+            node({
+          		"type": "response_condition",
+          		"title": null,
+          		"output": {
+          			"text": {
+          				"values": ["I have the address as ' $street_number $sub_component $street_name $street_word '. Is that right?"],
+          				"selection_policy": "sequential"
+          			}
+          		},
+          		"parent": "node_36_1520460846441",
+          		"context": null,
+          		"metadata": {},
+          		"next_step": null,
+          		"conditions": "$street_number != null && $street_name != null && $street_word != null",
+          		"description": null,
+          		"dialog_node": "node_6_1520971048725",
+          		"previous_sibling": "node_7_1520971063998"
+          	}),
+            confirmation_address()
+    ])
   ];
 }
 
 
 const report_complete = () => {
   return [
-    node(
-      {
+    node({
     		"type": "standard",
     		"title": "Report complete",
     		"output": {},
@@ -2350,9 +1515,43 @@ const report_complete = () => {
     		"dialog_node": "node_54_1520461610873",
     		"digress_out": "allow_all",
     		"previous_sibling": "node_36_1520460846441"
-    	}
-    )
-    //TODO: *** Need report_conditions/handlers for landmark vs. address conditions for report_complete ***
+    	}, [
+            node({
+          		"type": "response_condition",
+          		"title": null,
+          		"output": {
+          			"text": {
+          				"values": ["This report about ' $c_ct ', at ' $address ', will be filed with 311."],
+          				"selection_policy": "sequential"
+          			}
+          		},
+          		"parent": "node_54_1520461610873",
+          		"context": null,
+          		"metadata": {},
+          		"next_step": null,
+          		"conditions": "$address != null",
+          		"description": null,
+          		"dialog_node": "node_38_1521147872666",
+          		"previous_sibling": "node_39_1521147942322"
+          	}),
+            node({
+          		"type": "response_condition",
+          		"title": null,
+          		"output": {
+          			"text": {
+          				"values": ["This report about ' $c_ct ', at ' $landmark_address ', will be filed with 311."]
+          			}
+          		},
+          		"parent": "node_54_1520461610873",
+          		"context": null,
+          		"metadata": {},
+          		"next_step": null,
+          		"conditions": "$landmark_address != null",
+          		"description": null,
+          		"dialog_node": "node_39_1521147942322",
+          		"previous_sibling": null
+          	})
+      ])
   ];
 }
 
