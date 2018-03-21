@@ -81,6 +81,7 @@ const get_issue = () {
           "fallback": "leave"
         },
         next_step: {
+          behavior: "jump_to",
           selector: "condition",
           dialog_node: "node_15_1520456922489"
         },
@@ -502,6 +503,7 @@ const proceed_with_issue_report = () => {
       context: null,
       metadata: {},
       next_step: {
+        behavior: "jump_to",
         selector: "body",
         dialog_node: "node_27_1520358866193"
       },
@@ -524,6 +526,7 @@ const get_another_issue_report = () => {
       context: null,
       metadata: {},
       next_step: {
+        behavior: "jump_to",
         selector: "user_input",
         dialog_node: "node_1_1520357929976"
       },
@@ -1479,11 +1482,18 @@ const node = (values, children) => {
   }
 
   if ('next_step' in values && values['next_step'] != null) {
-    result['node']['next_step'] = {
-      behavior: 'jump_to',
-      dialog_node: values['next_step']['dialog_node'],
-      selector: values['next_step']['selector']
-    }
+    //next_step doesn't need "selector" or "dialog_node" if the behavior is 'skip_user_input'
+    if values['next_step']['behavior'] == 'skip_user_input' {
+        result['node']['next_step'] = {
+          behavior: values['next_step']['behavior'],
+        }
+      } else {
+        result['node']['next_step'] = {
+          behavior: values['next_step']['behavior'],
+          dialog_node: values['next_step']['dialog_node'],
+          selector: values['next_step']['selector']
+        }
+      }
   }
 
   if ('context' in values && values['context'] != null) {
