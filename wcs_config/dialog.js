@@ -552,7 +552,7 @@ const process_issue_confirmation = () => {
     			}
     		},
     		next_step: {
-    			"behavior": "skip_user_input"
+    			behavior: "skip_user_input"
     		},
     		conditions: "true",
     		description: null,
@@ -602,8 +602,8 @@ const process_issue_confirmation = () => {
                     output: {},
                     parent: "slot_17_1520457096281",
                     context: {
-                      "c_ct": "$ct",
-                      "c_agency": "$agency"
+                      c_ct: "$ct",
+                      c_agency: "$agency"
                     },
                     metadata: {},
                     next_step: null,
@@ -676,12 +676,7 @@ const confirm_the_issue = () => {
         node({
       		type: "response_condition",
       		title: null,
-      		output: {
-      			text: {
-      				"values": ["I have a report about '$ct'. Is that right?"],
-      				"selection_policy": "sequential"
-      			}
-      		},
+      		text: "I have a report about '$ct'. Is that right?",
       		parent: "node_15_1520456922489",
       		context: null,
       		metadata: {},
@@ -694,11 +689,7 @@ const confirm_the_issue = () => {
         node({
       		type: "response_condition",
       		title: null,
-      		output: {
-      			text: {
-      				"values": ["I have a report about '$ct', specifically about '$entity'. Is that right?"]
-      			}
-      		},
+      		text: "I have a report about '$ct', specifically about '$entity'. Is that right?",
       		parent: "node_15_1520456922489",
       		context: null,
       		metadata: {},
@@ -719,17 +710,12 @@ const issue_confirmed_need_address = () => {
       {
     		type: "standard",
     		title: "Issue confirmed, need address",
-    		output: {
-    			text: {
-    				"values": ["Next, I'll need to get an address where the reported issue is located."],
-    				"selection_policy": "sequential"
-    			}
-    		},
+    		text: "Next, I'll need to get an address where the reported issue is located.",
     		parent: null,
     		context: null,
     		metadata: {},
     		next_step: {
-    			"behavior": "jump_to",
+    			behavior: "jump_to",
     			selector: "condition",
     			dialog_node: "node_6_1521146866801"
     		},
@@ -752,11 +738,11 @@ const get_landmark_address = () => {
     		output: {},
     		parent: "node_6_1521146866801",
     		context: {
-    			"landmark_address": "City Hall Park, New York, NY 10007, USA"
+    			landmark_address: "City Hall Park, New York, NY 10007, USA"
     		},
     		metadata: {},
     		next_step: {
-    			"behavior": "jump_to",
+    			behavior: "jump_to",
     			selector: "condition",
     			dialog_node: "node_36_1520460846441"
     		},
@@ -780,7 +766,7 @@ const no_landmark_given = () => {
     		context: null,
     		metadata: {},
     		next_step: {
-    			"behavior": "jump_to",
+    			behavior: "jump_to",
     			selector: "condition",
     			dialog_node: "node_36_1520460846441"
     		},
@@ -798,19 +784,14 @@ const get_address = () => {
     node ({
     		type: "frame",
     		title: "Get Address",
-    		output: {
-    			text: {
-    				"values": ["Ok, got it."],
-    				"selection_policy": "sequential"
-    			}
-    		},
+    		text: "Ok, got it.",
     		parent: null,
     		context: null,
     		metadata: {
     			"fallback": "leave"
     		},
     		next_step: {
-    			"behavior": "skip_user_input"
+    			behavior: "skip_user_input"
     		},
     		conditions: "true",
     		digress_in: "does_not_return",
@@ -823,12 +804,7 @@ const get_address = () => {
             node({
           		type: "event_handler",
           		title: null,
-          		output: {
-          			text: {
-          				"values": ["I'll need a street number, street name, and a street word (like \"road\", \"st\", \"blvd\", \"way\", etc.). Or, you can give me the name of a Manhattan landmark."],
-          				"selection_policy": "sequential"
-          			}
-          		},
+          		text: "I'll need a street number, street name, and a street word (like \"road\", \"st\", \"blvd\", \"way\", etc.). Or, you can give me the name of a Manhattan landmark.",
           		parent: "node_6_1521146866801",
           		context: null,
           		metadata: {},
@@ -859,11 +835,11 @@ const get_address = () => {
                   		output: {},
                   		parent: "slot_8_1521146883638",
                   		context: {
-                  			"landmark": "@landmark",
-                  			"street_name": "placeholder",
-                  			"street_word": "placeholder",
-                  			"street_number": "placeholder",
-                  			"sub_component": "placeholder"
+                  			landmark: "@landmark",
+                  			street_name: "placeholder",
+                  			street_word: "placeholder",
+                  			street_number: "placeholder",
+                  			sub_component: "placeholder"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -908,7 +884,7 @@ const get_address = () => {
                   		output: {},
                   		parent: "slot_20_1521146903715",
                   		context: {
-                  			"sub_component": "<? input.text.extract('\\d+\\s(\\w)\\s',1) ?>"
+                  			sub_component: "<? input.text.extract('\\d+\\s(\\w)\\s',1) ?>"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -957,7 +933,7 @@ const get_address = () => {
                   		output: {},
                   		parent: "slot_11_1521146898185",
                   		context: {
-                  			"street_number": "@sys-number"
+                  			street_number: "@sys-number"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -970,29 +946,7 @@ const get_address = () => {
                     node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: {
-                  				"values": ["Ok, street name is updated from <?event.previous_value?> to <?event.current_value?>."]
-                  			}
-                  		},
-                  		parent: "slot_14_1521146900539",
-                  		context: null,
-                  		metadata: null,
-                  		next_step: null,
-                  		conditions: "event.previous_value != null && event.previous_value != event.current_value",
-                  		event_name: "filled",
-                  		description: null,
-                  		dialog_node: "handler_31_1521147143364",
-                  		previous_sibling: "handler_15_1521146900539"
-                  	}),
-                    node({
-                  		type: "event_handler",
-                  		title: null,
-                  		output: {
-                  			text: {
-                  				"values": ["Can I get a street number for that address? Ex: \"55\", \"1\", \"102\", etc."]
-                  			}
-                  		},
+                  		text: "Can I get a street number for that address? Ex: \"55\", \"1\", \"102\", etc.",
                   		parent: "slot_11_1521146898185",
                   		context: null,
                   		metadata: null,
@@ -1003,22 +957,34 @@ const get_address = () => {
                   		dialog_node: "handler_26_1521147057621",
                   		previous_sibling: "handler_25_1521147057621"
                   	}),
-                    {
+                    node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: "Can I get a street name for that address?"
-                  		},
-                  		parent: "slot_14_1521146900539",
+                  		text: "Ok, street number is updated from '<?event.previous_value?>' to '<?event.current_value?>'.",
+                  		parent: "slot_11_1521146898185",
+                  		context: null,
+                  		metadata: null,
+                  		next_step: null,
+                  		conditions: "event.previous_value != null && event.previous_value != event.current_value",
+                  		event_name: "filled",
+                  		description: null,
+                  		dialog_node: "handler_25_1521147057621",
+                  		previous_sibling: "handler_12_1521146898185"
+                  	}),
+                    node({
+                  		type: "event_handler",
+                  		title: null,
+                  		text: "Can I get a street number for that address?",
+                  		parent: "slot_11_1521146898185",
                   		context: null,
                   		metadata: {},
                   		next_step: null,
                   		conditions: null,
                   		event_name: "focus",
                   		description: null,
-                  		dialog_node: "handler_16_1521146900539",
+                  		dialog_node: "handler_13_1521146898185",
                   		previous_sibling: null
-                  	}
+                  	})
             ]),
             node({
           		type: "slot",
@@ -1041,11 +1007,7 @@ const get_address = () => {
                     node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: {
-                  				"values": ["Can I get a street name for that address? Ex: \"main\", \"mlk\", \"astor\", \"1st\", \"fifth\", etc."]
-                  			}
-                  		},
+                  		text: "Can I get a street name for that address? Ex: \"main\", \"mlk\", \"astor\", \"1st\", \"fifth\", etc.",
                   		parent: "slot_14_1521146900539",
                   		context: null,
                   		metadata: null,
@@ -1062,7 +1024,7 @@ const get_address = () => {
                   		output: {},
                   		parent: "slot_14_1521146900539",
                   		context: {
-                  			"street_name": "@street_name"
+                  			street_name: "@street_name"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -1075,11 +1037,7 @@ const get_address = () => {
                     node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: {
-                  				"values": ["Ok, street name is updated from <?event.previous_value?> to <?event.current_value?>."]
-                  			}
-                  		},
+                  		text: "Ok, street name is updated from <?event.previous_value?> to <?event.current_value?>.",
                   		parent: "slot_14_1521146900539",
                   		context: null,
                   		metadata: null,
@@ -1093,9 +1051,7 @@ const get_address = () => {
                     node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: "Can I get a street name for that address?"
-                  		},
+                  		text: "Can I get a street name for that address?",
                   		parent: "slot_14_1521146900539",
                   		context: null,
                   		metadata: {},
@@ -1128,11 +1084,7 @@ const get_address = () => {
                     node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: {
-                  				"values": ["Ok, street word is updated from <?event.previous_value?> to <?event.current_value?>."]
-                  			}
-                  		},
+                  		text: "Ok, street word is updated from <?event.previous_value?> to <?event.current_value?>.",
                   		parent: "slot_17_1521146902279",
                   		context: null,
                   		metadata: null,
@@ -1146,11 +1098,7 @@ const get_address = () => {
                     node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: {
-                  				"values": ["Can I get a street word for that address? Examples: \"st\", \"rd\", \"avenue\", \"place\", etc."]
-                  			}
-                  		},
+                  		text: "Can I get a street word for that address? Examples: \"st\", \"rd\", \"avenue\", \"place\", etc.",
                   		parent: "slot_17_1521146902279",
                   		context: null,
                   		metadata: null,
@@ -1167,7 +1115,7 @@ const get_address = () => {
                   		output: {},
                   		parent: "slot_17_1521146902279",
                   		context: {
-                  			"street_word": "@street_word"
+                  			street_word: "@street_word"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -1180,9 +1128,7 @@ const get_address = () => {
                     node({
                   		type: "event_handler",
                   		title: null,
-                  		output: {
-                  			text: "Can I get a street word for that address? Ex: \"st\", \"rd\", \"avenue\", \"place\", etc."
-                  		},
+                  		text: "Can I get a street word for that address? Ex: \"st\", \"rd\", \"avenue\", \"place\", etc.",
                   		parent: "slot_17_1521146902279",
                   		context: null,
                   		metadata: {},
@@ -1206,17 +1152,12 @@ const proceed_with_address = () => {
       {
     		type: "standard",
     		title: "proceed with address",
-    		output: {
-    			text: {
-    				"values": ["Ok, great."],
-    				"selection_policy": "sequential"
-    			}
-    		},
+    		text: "Ok, great.",
     		parent: "node_37_1520460846461",
     		context: null,
     		metadata: {},
     		next_step: {
-    			"behavior": "jump_to",
+    			behavior: "jump_to",
     			selector: "condition",
     			dialog_node: "node_54_1520461610873"
     		},
@@ -1235,16 +1176,12 @@ const get_another_address = () => {
       {
     		type: "standard",
     		title: "get another address",
-    		output: {
-    			text: {
-    				"values": ["Oops. Let's try that address again. I'll need a street number, street name, and street word."],
-    				"selection_policy": "sequential"
-    			},
-    			context: {
-    				"street_name": null,
-    				"street_word": null,
-    				"street_number": null,
-    				"sub_component": null
+    		text: "Oops. Let's try that address again. I'll need a street number, street name, and street word.",
+    		context: {
+    				street_name: null,
+    				street_word: null,
+    				street_number: null,
+    				sub_component: null
     			}
     		},
     		parent: "node_37_1520460846461",
@@ -1272,7 +1209,7 @@ const confirmation_address = () => {
     			"fallback": "leave"
     		},
     		next_step: {
-    			"behavior": "skip_user_input"
+    			behavior: "skip_user_input"
     		},
     		conditions: "true",
     		description: null,
@@ -1299,7 +1236,7 @@ const confirmation_address = () => {
                   		output: {},
                   		parent: "slot_40_1520460846461",
                   		context: {
-                  			"address": "$street_number $street_name $street_word"
+                  			address: "$street_number $street_name $street_word"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -1344,12 +1281,12 @@ const confirmation_address = () => {
                 		output: {},
                 		parent: "slot_43_1520460846461",
                 		context: {
-                			"address": null,
-                			"landmark": null,
-                			"street_name": null,
-                			"street_word": null,
-                			"street_number": null,
-                			"landmark_address": null
+                			address: null,
+                			landmark: null,
+                			street_name: null,
+                			street_word: null,
+                			street_number: null,
+                			landmark_address: null
                 		},
                 		metadata: {},
                 		next_step: null,
@@ -1426,11 +1363,7 @@ const confirm_the_address = () => {
             node({
           		type: "response_condition",
           		title: null,
-          		output: {
-          			text: {
-          				"values": ["I have the address as ' $landmark_address ', which is the address for '$landmark'. Is that right?"]
-          			}
-          		},
+          		text: "I have the address as ' $landmark_address ', which is the address for '$landmark'. Is that right?",
           		parent: "node_36_1520460846441",
           		context: null,
           		metadata: {},
@@ -1443,12 +1376,7 @@ const confirm_the_address = () => {
             node({
           		type: "response_condition",
           		title: null,
-          		output: {
-          			text: {
-          				"values": ["I have the address as ' $street_number $sub_component $street_name $street_word '. Is that right?"],
-          				"selection_policy": "sequential"
-          			}
-          		},
+          		text: "I have the address as ' $street_number $sub_component $street_name $street_word '. Is that right?",
           		parent: "node_36_1520460846441",
           		context: null,
           		metadata: {},
@@ -1488,12 +1416,7 @@ const report_complete = () => {
             node({
           		type: "response_condition",
           		title: null,
-          		output: {
-          			text: {
-          				"values": ["This report about ' $c_ct ', at ' $address ', will be filed with 311."],
-          				"selection_policy": "sequential"
-          			}
-          		},
+          		text: "This report about ' $c_ct ', at ' $address ', will be filed with 311.",
           		parent: "node_54_1520461610873",
           		context: null,
           		metadata: {},
@@ -1506,11 +1429,7 @@ const report_complete = () => {
             node({
           		type: "response_condition",
           		title: null,
-          		output: {
-          			text: {
-          				"values": ["This report about ' $c_ct ', at ' $landmark_address ', will be filed with 311."]
-          			}
-          		},
+          		text: "This report about ' $c_ct ', at ' $landmark_address ', will be filed with 311.",
           		parent: "node_54_1520461610873",
           		context: null,
           		metadata: {},
@@ -1530,12 +1449,7 @@ const anything_else = () => {
       {
     		type: "standard",
     		title: "Anything else",
-    		output: {
-    			text: {
-    				"values": ["I didn't understand. You can try rephrasing.", "Can you reword your statement? I'm not understanding.", "I didn't get your meaning."],
-    				"selection_policy": "sequential"
-    			}
-    		},
+    		text: "I didn't understand. You can try rephrasing.", "Can you reword your statement? I'm not understanding.", "I didn't get your meaning.",
     		parent: null,
     		context: null,
     		metadata: {},
