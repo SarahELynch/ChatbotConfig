@@ -1473,7 +1473,7 @@ const anything_else = () => {
 const node = (values, children) => {
   let result = {
     children: children || null,
-    override_node_name: values['dialog_node'] || null,
+    override_node_name: values['title'] || null,
     node: {}
   };
 
@@ -1508,6 +1508,25 @@ const node = (values, children) => {
       }
     };
   }
+
+  if ('type' in values && values['type'] != null) {
+    result['node']['type'] = values['type'];
+  }
+
+  if ('metadata' in values && values['metadata'] != null) {
+    result['node']['metadata'] = values['metadata'];
+    //TODO - does "metadata" need to be broken up into its parts (if they're != null)?
+  }
+
+  if ('event_name' in values && values['event_name'] != null) {
+    result['node']['event_name'] = values['event_name'];
+  }
+
+  if ('variable' in values && values['variable'] != null) {
+    result['node']['variable'] = values['variable'];
+  }
+
+
   return result;
 };
 
