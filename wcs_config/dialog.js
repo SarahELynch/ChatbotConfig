@@ -69,7 +69,7 @@ const welcome = () => {
   ];
 }
 
-const get_issue = () {
+const get_issue = () => {
   return [
     node({
         type: "frame",
@@ -494,55 +494,57 @@ const get_issue = () {
 
 
 const proceed_with_issue_report = () => {
-  node(
-    {
-      type: "standard",
-      title: "proceed with issue report",
-      text: "Ok, great.",
-      //parent: "node_16_1520457025654",
-      context: null,
-      metadata: {},
-      next_step: {
-        behavior: "jump_to",
-        selector: "body",
-        dialog_node: "Issue confirmed, need address"
-      },
-      conditions: "$ct != null && $c_ct != null",
-      description: null,
-      //dialog_node: "slot_34_1520458045780",
-      //previous_sibling: null
-    }
-  )
-}
-
-const get_another_issue_report = () => {
-  node(
-    {
-      type: "standard",
-      title: "get another issue report",
-      output: {
-      text: "Oops. Let's try again. Please describe, in a few words, the issue you'd like to report to 311.",
-      //parent: "node_16_1520457025654",
-      context: null,
-      metadata: {},
-      next_step: {
-        behavior: "jump_to",
-        selector: "user_input",
-        dialog_node: "Get Issue"
-      },
-      conditions: "true",
-      description: null,
-      //dialog_node: "node_35_1520458089865",
-      //previous_sibling: "node_34_1520458045780"
-    }
-  )
-}
-
-
-const process_issue_confirmation = () => {
   return [
     node(
       {
+        type: "standard",
+        title: "proceed with issue report",
+        text: "Ok, great.",
+        //parent: "node_16_1520457025654",
+        context: null,
+        metadata: {},
+        next_step: {
+          behavior: "jump_to",
+          selector: "body",
+          dialog_node: "Issue confirmed, need address"
+        },
+        conditions: "$ct != null && $c_ct != null",
+        description: null,
+        //dialog_node: "slot_34_1520458045780",
+        //previous_sibling: null
+      }
+    )
+  ];
+}
+
+const get_another_issue_report = () => {
+  return [
+    node(
+      {
+        type: "standard",
+        title: "get another issue report",
+        text: "Oops. Let's try again. Please describe, in a few words, the issue you'd like to report to 311.",
+        //parent: "node_16_1520457025654",
+        context: null,
+        metadata: {},
+        next_step: {
+          behavior: "jump_to",
+          selector: "user_input",
+          dialog_node: "Get Issue"
+        },
+        conditions: "true",
+        description: null,
+        //dialog_node: "node_35_1520458089865",
+        //previous_sibling: "node_34_1520458045780"
+      }
+    )
+  ];
+}
+
+
+const process_issue_confirmation = (proceed_with_issue_report_node, get_another_issue_report_node) => {
+  return [
+    node({
     		type: "frame",
     		title: "process_issue_confirmation",
     		text: null,
@@ -648,13 +650,18 @@ const process_issue_confirmation = () => {
                 		//previous_sibling: "handler_24_1520457485837"
                 	})
               ]),
-            proceed_with_issue_report(),
-            get_another_issue_report()
+
+            proceed_with_issue_report_node,
+            get_another_issue_report_node
+
     ])
   ];
 }
 
-const confirm_the_issue = () => {
+const confirm_the_issue = (process_issue_confirmation_node) => {
+
+  //let process_issue_confirmation_node = process_issue_confirmation();
+
   return [
     node (
       {
@@ -702,7 +709,123 @@ const confirm_the_issue = () => {
       		//dialog_node: "node_28_1521221791354",
       		//previous_sibling: "node_27_1521221715274"
       	}),
-        process_issue_confirmation()
+
+
+          process_issue_confirmation_node
+          // //*******************************
+          // node({
+          // 		type: "frame",
+          // 		title: "process_issue_confirmation",
+          // 		text: null,
+          // 		//parent: "node_15_1520456922489",
+          // 		context: null,
+          // 		metadata: {
+          // 			fallback: "leave",
+          // 			_customization: {
+          // 				mcr: false
+          // 			}
+          // 		},
+          // 		next_step: {
+          // 			behavior: "skip_user_input"
+          // 		},
+          // 		conditions: "true",
+          // 		description: null,
+          // 		//dialog_node: "node_16_1520457025654",
+          // 		digress_out: "allow_all",
+          // 		//previous_sibling: "node_28_1521221791354",
+          // 		digress_out_slots: "not_allowed"
+          // 	},
+          //   [
+          //         node({
+          //           //**** This node is disabled... can I remove it?
+          //       		type: "response_condition",
+          //       		title: null,
+          //       		output: {
+          //       			text: {
+          //       				"values": []
+          //       			}
+          //       		},
+          //       		//parent: "node_16_1520457025654",
+          //       		context: null,
+          //           // DISABLED???!
+          //       		disabled: true,
+          //       		metadata: {},
+          //       		next_step: null,
+          //       		conditions: null,
+          //       		description: null,
+          //       		//dialog_node: "node_58_1521227765093",
+          //       		//previous_sibling: "node_35_1520458089865"
+          //       	}),
+          //         node({
+          //           type: "slot",
+          //           title: null,
+          //           output: {},
+          //           //parent: "node_16_1520457025654",
+          //           context: null,
+          //           metadata: {},
+          //           variable: "$c_ct",
+          //           next_step: null,
+          //           conditions: null,
+          //           description: null,
+          //           //dialog_node: "slot_17_1520457096281",
+          //           //previous_sibling: "node_58_1521227765093"
+          //         }, [
+          //               node({
+          //                 type: "event_handler",
+          //                 title: null,
+          //                 output: {},
+          //                 //parent: "slot_17_1520457096281",
+          //                 context: {
+          //                   c_ct: "$ct",
+          //                   c_agency: "$agency"
+          //                 },
+          //                 metadata: {},
+          //                 next_step: null,
+          //                 conditions: "#affirmative",
+          //                 event_name: "input",
+          //                 description: null,
+          //                 //dialog_node: "handler_18_1520457096281",
+          //                 //previous_sibling: "handler_19_1520457096281"
+          //               })
+          //         ]),
+          //         node({
+          //       		type: "slot",
+          //       		title: null,
+          //       		output: {},
+          //       		//parent: "node_16_1520457025654",
+          //       		context: null,
+          //       		metadata: {},
+          //       		variable: "$ct",
+          //       		next_step: null,
+          //       		conditions: null,
+          //       		description: null,
+          //       		//dialog_node: "slot_22_1520457485837",
+          //       		//previous_sibling: "slot_17_1520457096281"
+          //       	}, [
+          //                 node({
+          //             		type: "event_handler",
+          //             		title: null,
+          //             		output: {},
+          //             		//parent: "slot_22_1520457485837",
+          //             		context: {
+          //             			ct: null
+          //             		},
+          //             		metadata: {},
+          //             		next_step: null,
+          //             		conditions: "#negative",
+          //             		event_name: "input",
+          //             		description: null,
+          //             		//dialog_node: "handler_23_1520457485837",
+          //             		//previous_sibling: "handler_24_1520457485837"
+          //             	})
+          //           ]),
+          //
+          //         proceed_with_issue_report(),
+          //         get_another_issue_report()
+          //
+          // ])
+          //   //*******************************
+
     ])
   ];
 }
@@ -1185,10 +1308,9 @@ const get_another_address = () => {
     				street_word: null,
     				street_number: null,
     				sub_component: null
-    			}
     		},
     		//parent: "node_37_1520460846461",
-    		context: null,
+    		//context: null,    *** TODO - why was this here? the context was set above ^^ Is this a UI/json export bug?
     		metadata: {},
     		next_step: null,
     		conditions: "true",
@@ -1452,7 +1574,7 @@ const anything_else = () => {
       {
     		type: "standard",
     		title: "Anything else",
-    		text: "I didn't understand. You can try rephrasing.", "Can you reword your statement? I'm not understanding.", "I didn't get your meaning.",
+    		text: ["I didn't understand. You can try rephrasing.", "Can you reword your statement? I'm not understanding.", "I didn't get your meaning."],
     		//parent: null,
     		context: null,
     		metadata: {},
@@ -1483,7 +1605,7 @@ const node = (values, children) => {
 
   if ('next_step' in values && values['next_step'] != null) {
     //next_step doesn't need "selector" or "dialog_node" if the behavior is 'skip_user_input'
-    if values['next_step']['behavior'] == 'skip_user_input' {
+    if (values['next_step']['behavior'] == 'skip_user_input') {
         result['node']['next_step'] = {
           behavior: values['next_step']['behavior'],
         }
@@ -1541,10 +1663,18 @@ const node = (values, children) => {
   return result;
 };
 
+
 const parseBranch = (branch, name, parentName, previousSiblingName, result) => {
   let node = branch['node'];
+
+  console.log("NODE: ", branch['node']);                                            //*** debugging log ***
+
   let dialog_node = branch['override_node_name'] || name.toString();
-  node['dialog_node'] = dialog_node;
+
+  console.log("** Override name: ** ", branch['override_node_name']);     //*** debugging log ***
+  console.log("** counter number: ** ",name.toString());                  //*** debugging log ***
+
+  node['title'] = dialog_node;
   if (parentName != null) {
     node['parent'] = parentName;
   }
@@ -1576,6 +1706,10 @@ let _agencies = export_file('./wcs_config/raw/strings/agencies');
 // this function collapses subtrees into a 1D array with proper parent names and previous siblings
 const exportDialogTree = () => {
 
+  const proceed_with_issue_report_node = proceed_with_issue_report();
+  const get_another_issue_report_node = get_another_issue_report();
+  const process_issue_confirmation_node = process_issue_confirmation(proceed_with_issue_report_node, get_another_issue_report_node);
+
   // remember - order here is important!
   let groups = [
 
@@ -1583,7 +1717,7 @@ const exportDialogTree = () => {
 
     get_issue(),
 
-    confirm_the_issue(),
+    confirm_the_issue(process_issue_confirmation_node),
 
     issue_confirmed_need_address(),
 
