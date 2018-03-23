@@ -1526,6 +1526,17 @@ const node = (values, children) => {
     result['node']['variable'] = values['variable'];
   }
 
+  if ('digress_in' in values && values['digress_in'] != null) {
+    result['node']['digress_in'] = values['digress_in'];
+  }
+
+  if ('digress_out' in values && values['digress_out'] != null) {
+    result['node']['digress_out'] = values['digress_out'];
+  }
+
+  if ('digress_out_slots' in values && values['digress_out_slots'] != null) {
+    result['node']['digress_out_slots'] = values['digress_out_slots'];
+  }
 
   return result;
 };
