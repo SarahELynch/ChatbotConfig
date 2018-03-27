@@ -18,18 +18,6 @@ const exportRaw = (path) => {
 module.exports = {
   intents: [
     {
-      intent: "greeting",
-      examples: exportRaw('./wcs_config/raw/intents/greeting')
-    },
-    {
-      intent: "what-function",
-      examples: exportRaw('./wcs_config/raw/intents/what_function')
-    },
-    {
-      intent: "generic-report",
-      examples: exportRaw('./wcs_config/raw/intents/generic_report')
-    },
-    {
       intent: "affirmative",
       examples: exportRaw('./wcs_config/raw/intents/affirmative')
     },
@@ -42,16 +30,20 @@ module.exports = {
       examples: exportRaw('./wcs_config/raw/intents/report_damaged_tree')
     },
     {
-      intent: "report-street-condition",
-      examples: exportRaw('./wcs_config/raw/intents/report_street_condition')
-    },
-    {
       intent: "report-graffiti",
       examples: exportRaw('./wcs_config/raw/intents/report_graffiti')
     },
     {
       intent: "report-noise",
       examples: exportRaw('./wcs_config/raw/intents/report_noise')
+    },
+    {
+      intent: "report-street-condition",
+      examples: exportRaw('./wcs_config/raw/intents/report_street_condition')
+    },
+    {
+      intent: "what-function",
+      examples: exportRaw('./wcs_config/raw/intents/what_function')
     }
   ]
 };
