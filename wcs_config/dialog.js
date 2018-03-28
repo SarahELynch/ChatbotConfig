@@ -88,7 +88,7 @@ const get_issue = () => {
         conditions: "#report-street-condition || #report-graffiti || #report-noise || #report-damaged-tree",
         digress_in: "does_not_return",
         description: null,
-        //dialog_node: "node_1_1520357929976",
+        dialog_node: "Get Issue",
         digress_out: "allow_all",
         previous_sibling: "Welcome",
         digress_out_slots: "not_allowed"
@@ -506,11 +506,11 @@ const proceed_with_issue_report = () => {
         next_step: {
           behavior: "jump_to",
           selector: "body",
-          dialog_node: "Issue confirmed, need address"
+          dialog_node: "Issue confirmed-need address"
         },
         conditions: "$ct != null && $c_ct != null",
         description: null,
-        //dialog_node: "slot_34_1520458045780",
+        dialog_node: "proceed with issue report",
         //previous_sibling: null
       }
     )
@@ -534,7 +534,7 @@ const get_another_issue_report = () => {
         },
         conditions: "true",
         description: null,
-        //dialog_node: "node_35_1520458089865",
+        dialog_node: "get another issue report",
         //previous_sibling: "node_34_1520458045780"
       }
     )
@@ -542,8 +542,8 @@ const get_another_issue_report = () => {
 }
 
 
-const process_issue_confirmation = (proceed_with_issue_report_node, get_another_issue_report_node) => {
-  return [
+const process_issue_confirmation = () => {
+  let result = [
     node({
     		type: "frame",
     		title: "process_issue_confirmation",
@@ -561,7 +561,7 @@ const process_issue_confirmation = (proceed_with_issue_report_node, get_another_
     		},
     		conditions: "true",
     		description: null,
-    		//dialog_node: "node_16_1520457025654",
+    		dialog_node: "process_issue_confirmation",
     		digress_out: "allow_all",
     		//previous_sibling: "node_28_1521221791354",
     		digress_out_slots: "not_allowed"
@@ -649,20 +649,19 @@ const process_issue_confirmation = (proceed_with_issue_report_node, get_another_
                 		//dialog_node: "handler_23_1520457485837",
                 		//previous_sibling: "handler_24_1520457485837"
                 	})
-              ]),
+              ])
 
-            proceed_with_issue_report_node,
-            get_another_issue_report_node
-
-    ])
+    ].concat( proceed_with_issue_report() )
+    .concat( get_another_issue_report() )
+    )
   ];
+
+  return result;
 }
 
-const confirm_the_issue = (process_issue_confirmation_node) => {
+const confirm_the_issue = () => {
 
-  //let process_issue_confirmation_node = process_issue_confirmation();
-
-  return [
+  let result = [
     node (
       {
       type: "standard",
@@ -679,7 +678,7 @@ const confirm_the_issue = (process_issue_confirmation_node) => {
       conditions: "$ct != null && $ct != ''",
       digress_in: "does_not_return",
       description: null,
-      //dialog_node: "node_15_1520456922489",
+      dialog_node: "Confirm The Issue",
       digress_out: "allow_all",
       //previous_sibling: "node_1_1520357929976"
     }, [
@@ -708,126 +707,12 @@ const confirm_the_issue = (process_issue_confirmation_node) => {
       		description: null,
       		//dialog_node: "node_28_1521221791354",
       		//previous_sibling: "node_27_1521221715274"
-      	}),
-
-
-          process_issue_confirmation_node
-          // //*******************************
-          // node({
-          // 		type: "frame",
-          // 		title: "process_issue_confirmation",
-          // 		text: null,
-          // 		//parent: "node_15_1520456922489",
-          // 		context: null,
-          // 		metadata: {
-          // 			fallback: "leave",
-          // 			_customization: {
-          // 				mcr: false
-          // 			}
-          // 		},
-          // 		next_step: {
-          // 			behavior: "skip_user_input"
-          // 		},
-          // 		conditions: "true",
-          // 		description: null,
-          // 		//dialog_node: "node_16_1520457025654",
-          // 		digress_out: "allow_all",
-          // 		//previous_sibling: "node_28_1521221791354",
-          // 		digress_out_slots: "not_allowed"
-          // 	},
-          //   [
-          //         node({
-          //           //**** This node is disabled... can I remove it?
-          //       		type: "response_condition",
-          //       		title: null,
-          //       		output: {
-          //       			text: {
-          //       				"values": []
-          //       			}
-          //       		},
-          //       		//parent: "node_16_1520457025654",
-          //       		context: null,
-          //           // DISABLED???!
-          //       		disabled: true,
-          //       		metadata: {},
-          //       		next_step: null,
-          //       		conditions: null,
-          //       		description: null,
-          //       		//dialog_node: "node_58_1521227765093",
-          //       		//previous_sibling: "node_35_1520458089865"
-          //       	}),
-          //         node({
-          //           type: "slot",
-          //           title: null,
-          //           output: {},
-          //           //parent: "node_16_1520457025654",
-          //           context: null,
-          //           metadata: {},
-          //           variable: "$c_ct",
-          //           next_step: null,
-          //           conditions: null,
-          //           description: null,
-          //           //dialog_node: "slot_17_1520457096281",
-          //           //previous_sibling: "node_58_1521227765093"
-          //         }, [
-          //               node({
-          //                 type: "event_handler",
-          //                 title: null,
-          //                 output: {},
-          //                 //parent: "slot_17_1520457096281",
-          //                 context: {
-          //                   c_ct: "$ct",
-          //                   c_agency: "$agency"
-          //                 },
-          //                 metadata: {},
-          //                 next_step: null,
-          //                 conditions: "#affirmative",
-          //                 event_name: "input",
-          //                 description: null,
-          //                 //dialog_node: "handler_18_1520457096281",
-          //                 //previous_sibling: "handler_19_1520457096281"
-          //               })
-          //         ]),
-          //         node({
-          //       		type: "slot",
-          //       		title: null,
-          //       		output: {},
-          //       		//parent: "node_16_1520457025654",
-          //       		context: null,
-          //       		metadata: {},
-          //       		variable: "$ct",
-          //       		next_step: null,
-          //       		conditions: null,
-          //       		description: null,
-          //       		//dialog_node: "slot_22_1520457485837",
-          //       		//previous_sibling: "slot_17_1520457096281"
-          //       	}, [
-          //                 node({
-          //             		type: "event_handler",
-          //             		title: null,
-          //             		output: {},
-          //             		//parent: "slot_22_1520457485837",
-          //             		context: {
-          //             			ct: null
-          //             		},
-          //             		metadata: {},
-          //             		next_step: null,
-          //             		conditions: "#negative",
-          //             		event_name: "input",
-          //             		description: null,
-          //             		//dialog_node: "handler_23_1520457485837",
-          //             		//previous_sibling: "handler_24_1520457485837"
-          //             	})
-          //           ]),
-          //
-          //         proceed_with_issue_report(),
-          //         get_another_issue_report()
-          //
-          // ])
-          //   //*******************************
-
-    ])
+      	})
+      ].concat(process_issue_confirmation())
+    )
   ];
+
+  return result;
 }
 
 const issue_confirmed_need_address = () => {
@@ -835,7 +720,7 @@ const issue_confirmed_need_address = () => {
     node(
       {
     		type: "standard",
-    		title: "Issue confirmed, need address",
+    		title: "Issue confirmed-need address",
     		text: "Next, I'll need to get an address where the reported issue is located.",
     		//parent: null,
     		context: null,
@@ -847,7 +732,7 @@ const issue_confirmed_need_address = () => {
     		},
     		conditions: "true",
     		description: null,
-    		//dialog_node: "node_27_1520358866193",
+    		dialog_node: "Issue confirmed-need address",
     		//previous_sibling: "node_15_1520456922489"
     	}
     )
@@ -874,7 +759,7 @@ const get_landmark_address = () => {
     		},
     		conditions: "$landmark != null",
     		description: null,
-    		//dialog_node: "node_19_1520974010769",
+    		dialog_node: "get landmark address",
     		//previous_sibling: null
     	}
     )
@@ -898,7 +783,7 @@ const no_landmark_given = () => {
     		},
     		conditions: "$landmark == null",
     		description: null,
-    		//dialog_node: "node_37_1521147552788",
+    		dialog_node: "no landmark given",
     		//previous_sibling: "node_19_1520974010769"
     	}
     )
@@ -922,7 +807,7 @@ const get_address = () => {
     		conditions: "true",
     		digress_in: "does_not_return",
     		description: null,
-    		//dialog_node: "node_6_1521146866801",
+    		dialog_node: "Get Address",
     		digress_out: "allow_all",
     		//previous_sibling: "node_27_1520358866193",
     		digress_out_slots: "not_allowed"
@@ -1265,10 +1150,11 @@ const get_address = () => {
                   		//dialog_node: "handler_19_1521146902279",
                   		//previous_sibling: null
                   	})
-            ]),
-            get_landmark_address(),
-            no_landmark_given()
-        ])
+            ])
+
+        ].concat( get_landmark_address() )
+        .concat( no_landmark_given() )
+      )
   ];
 }
 
@@ -1289,7 +1175,7 @@ const proceed_with_address = () => {
     		},
     		conditions: "$address != null",
     		description: null,
-    		//dialog_node: "node_38_1520460846461",
+    		dialog_node: "proceed with address",
     		//previous_sibling: null
     	}
     )
@@ -1315,7 +1201,7 @@ const get_another_address = () => {
     		next_step: null,
     		conditions: "true",
     		description: null,
-    		//dialog_node: "node_39_1520460846461",
+    		dialog_node: "get another address",
     		//previous_sibling: "node_38_1520460846461"
     	}
     )
@@ -1338,7 +1224,7 @@ const confirmation_address = () => {
     		},
     		conditions: "true",
     		description: null,
-    		//dialog_node: "node_37_1520460846461",
+    		dialog_node: "confirmation_address",
     		//previous_sibling: null
     	}, [
             node({
@@ -1456,10 +1342,10 @@ const confirmation_address = () => {
                 		//dialog_node: "handler_44_1520460846461",
                 		//previous_sibling: null
                 	})
-            ]),
-            proceed_with_address(),
-            get_another_address()
-    ])
+            ])
+    ].concat( proceed_with_address() )
+    .concat( get_another_address() )
+  )
   ];
 }
 
@@ -1481,7 +1367,7 @@ const confirm_the_address = () => {
     		conditions: "true",
     		digress_in: "does_not_return",
     		description: null,
-    		//dialog_node: "node_36_1520460846441",
+    		dialog_node: "Confirm The Address",
     		digress_out: "allow_all",
     		//previous_sibling: "node_6_1521146866801"
     	}, [
@@ -1510,9 +1396,9 @@ const confirm_the_address = () => {
           		description: null,
           		//dialog_node: "node_6_1520971048725",
           		//previous_sibling: "node_7_1520971063998"
-          	}),
-            confirmation_address()
-    ])
+          	})
+    ].concat(confirmation_address())
+  )
   ];
 }
 
@@ -1534,7 +1420,7 @@ const report_complete = () => {
     		conditions: "$c_ct != null && $address != null || c_ct != null && $landmark_address != null",
     		digress_in: "does_not_return",
     		description: null,
-    		//dialog_node: "node_54_1520461610873",
+    		dialog_node: "Report complete",
     		digress_out: "allow_all",
     		//previous_sibling: "node_36_1520460846441"
     	}, [
@@ -1581,7 +1467,7 @@ const anything_else = () => {
     		next_step: null,
     		conditions: "anything_else",
     		description: null,
-    		//dialog_node: "Anything else",
+    		dialog_node: "Anything else",
     		//previous_sibling: "node_54_1520461610873"
     	}
     )
@@ -1667,14 +1553,15 @@ const node = (values, children) => {
 const parseBranch = (branch, name, parentName, previousSiblingName, result) => {
   let node = branch['node'];
 
-  console.log("NODE: ", branch['node']);                                            //*** debugging log ***
+  //console.log("NODE: ", branch['node']);                                            //*** debugging log ***
 
   let dialog_node = branch['override_node_name'] || name.toString();
 
-  console.log("** Override name: ** ", branch['override_node_name']);     //*** debugging log ***
-  console.log("** counter number: ** ",name.toString());                  //*** debugging log ***
+  //console.log("** Override name: ** ", branch['override_node_name']);     //*** debugging log ***
+  //console.log("** counter number: ** ",name.toString());                  //*** debugging log ***
 
   node['title'] = dialog_node;
+  node['dialog_node'] = dialog_node;
   if (parentName != null) {
     node['parent'] = parentName;
   }
@@ -1706,10 +1593,6 @@ let _agencies = export_file('./wcs_config/raw/strings/agencies');
 // this function collapses subtrees into a 1D array with proper parent names and previous siblings
 const exportDialogTree = () => {
 
-  const proceed_with_issue_report_node = proceed_with_issue_report();
-  const get_another_issue_report_node = get_another_issue_report();
-  const process_issue_confirmation_node = process_issue_confirmation(proceed_with_issue_report_node, get_another_issue_report_node);
-
   // remember - order here is important!
   let groups = [
 
@@ -1717,7 +1600,7 @@ const exportDialogTree = () => {
 
     get_issue(),
 
-    confirm_the_issue(process_issue_confirmation_node),
+    confirm_the_issue(),
 
     issue_confirmed_need_address(),
 

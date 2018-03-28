@@ -37,7 +37,7 @@ const check_training_status = (onDone) => {
 conversation.workspaceStatus({ workspace_id: process.env.WORKSPACE_ID }, (err, resp) => {
   if (err) {
     console.log("error: workspace status, ", err);
-  
+
     conversation.createWorkspace( workspace, (err, resp) => {
       if(err) console.log("error: workspace create:", util.inspect(err, false, null));
       console.log("info: create workspace resp:", resp);
@@ -49,8 +49,8 @@ conversation.workspaceStatus({ workspace_id: process.env.WORKSPACE_ID }, (err, r
     process.exit(0);
   } else if (process.env.ENV != '') {
     workspace['workspace_id'] = process.env.WORKSPACE_ID;
-    workspace['name'] = "rokerbot-" + process.env.ENV;
-    // don't fill prod logs with the blob 
+    workspace['name'] = workspace['name'] + "_" + process.env.ENV;
+    // don't fill prod logs with the blob
     if(process.env.ENV.indexOf("prod") == -1) {
       console.log(util.inspect(workspace, false, null));
     }
