@@ -6,7 +6,7 @@ const _dialog = require('./dialog').dialog;
 module.exports = {
   workspace: {
     name: "rokerslots",
-    description: `311 bot using slot, constructed and Updated programmatically`,
+    description: `311 bot using slots, constructed and Updated programmatically`,
     language: "en",
     metadata: {},
     dialog_nodes: _dialog,

@@ -108,6 +108,191 @@ const get_issue = () => {
         		//previous_sibling: "slot_6_1520358278972"
         	}),
           node({
+              type: "slot",
+              title: null,
+              output: {},
+              //parent: "node_1_1520357929976",
+              context: null,
+              metadata: {},
+              variable: "$agency",
+              next_step: null,
+              conditions: null,
+              description: null,
+              //dialog_node: "slot_13_1521220555649",
+              //previous_sibling: "slot_10_1521220551613"
+            }, [
+                      node({
+                        type: "event_handler",
+                        title: null,
+                        output: {},
+                        //parent: "slot_13_1521220555649",
+                        context: {
+                          ct: "noise",
+                          agency: "dep"
+                        },
+                        metadata: {},
+                        next_step: null,
+                        conditions: "#report-noise && @dep",
+                        event_name: "input",
+                        description: null,
+                        //dialog_node: "handler_14_1521220555649",
+                        //previous_sibling: "handler_15_1521220555649"
+                      }),
+                      node({
+                        type: "event_handler",
+                        title: null,
+                        output: {},
+                        //parent: "slot_13_1521220555649",
+                        context: null,
+                        metadata: null,
+                        next_step: null,
+                        conditions: null,
+                        event_name: "focus",
+                        description: null,
+                        //dialog_node: "handler_15_1521220555649",
+                        //previous_sibling: null
+                      })
+                  ]),
+          node({
+            type: "slot",
+            title: null,
+            output: {},
+            //parent: "node_1_1520357929976",
+            context: null,
+            metadata: {},
+            variable: "$agency",
+            next_step: null,
+            conditions: null,
+            description: null,
+            //dialog_node: "slot_22_1521220770556",
+            //previous_sibling: "slot_13_1521220555649"
+          }, [
+                      node({
+                        type: "event_handler",
+                        title: null,
+                        output: {},
+                        //parent: "slot_22_1521220770556",
+                        context: {
+                          ct: "noise",
+                          agency: "nypd"
+                        },
+                        metadata: {},
+                        next_step: null,
+                        conditions: "#report-noise && @nypd",
+                        event_name: "input",
+                        description: null,
+                        //dialog_node: "handler_23_1521220770556",
+                        //previous_sibling: "handler_24_1521220770556"
+                      }),
+                      node({
+                        type: "event_handler",
+                        title: null,
+                        output: {},
+                        //parent: "slot_22_1521220770556",
+                        context: null,
+                        metadata: null,
+                        next_step: null,
+                        conditions: null,
+                        event_name: "focus",
+                        description: null,
+                        //dialog_node: "handler_24_1521220770556",
+                        //previous_sibling: null
+                      })
+                  ]),
+                  node({
+                		type: "slot",
+                		title: null,
+                		output: {},
+                		//parent: "node_1_1520357929976",
+                		context: null,
+                		metadata: {},
+                		variable: "$agency",
+                		next_step: null,
+                		conditions: null,
+                		description: null,
+                		//dialog_node: "slot_10_1521220551613",
+                		//previous_sibling: "slot_4_1521220486223"
+                	}, [
+                                node({
+                              		type: "event_handler",
+                              		title: null,
+                              		output: {},
+                              		//parent: "slot_10_1521220551613",
+                              		context: {
+                              			ct: "graffiti",
+                              			agency: "dsny",
+                              			entity: "@dsny.value"
+                              		},
+                              		metadata: {},
+                              		next_step: null,
+                              		conditions: "#report-graffiti && @dsny",
+                              		event_name: "input",
+                              		description: null,
+                              		//dialog_node: "handler_11_1521220551613",
+                              		//previous_sibling: "handler_12_1521220551613"
+                              	}),
+                                node({
+                              		type: "event_handler",
+                              		title: null,
+                              		output: {},
+                              		//parent: "slot_10_1521220551613",
+                              		context: null,
+                              		metadata: {},
+                              		next_step: null,
+                              		conditions: null,
+                              		event_name: "focus",
+                              		description: null,
+                              		//dialog_node: "handler_12_1521220551613",
+                              		//previous_sibling: null
+                              	})
+                            ]),
+                  node({
+                		type: "slot",
+                		title: null,
+                		output: {},
+                		//parent: "node_1_1520357929976",
+                		context: null,
+                		metadata: {},
+                		variable: "$agency",
+                		next_step: null,
+                		conditions: null,
+                		description: null,
+                		//dialog_node: "slot_4_1521220486223",
+                		//previous_sibling: null
+                	}, [
+                                node({
+                              		type: "event_handler",
+                              		title: null,
+                              		output: {},
+                              		//parent: "slot_4_1521220486223",
+                              		context: {
+                              			agency: "dpr",
+                              			entity: "@dpr.value"
+                              		},
+                              		metadata: {},
+                              		next_step: null,
+                              		conditions: "#report-damaged-tree && @dpr",
+                              		event_name: "input",
+                              		description: null,
+                              		//dialog_node: "handler_5_1521220486223",
+                              		//previous_sibling: "handler_6_1521220486223"
+                              	}),
+                                node({
+                              		type: "event_handler",
+                              		title: null,
+                              		output: {},
+                              		//parent: "slot_4_1521220486223",
+                              		context: null,
+                              		metadata: {},
+                              		next_step: null,
+                              		conditions: null,
+                              		event_name: "focus",
+                              		description: null,
+                              		//dialog_node: "handler_6_1521220486223",
+                              		//previous_sibling: null
+                              	})
+                            ]),
+          node({
           		type: "slot",
           		title: null,
           		output: {},
@@ -255,98 +440,6 @@ const get_issue = () => {
                       	})
                   ]),
           node({
-          		type: "slot",
-          		title: null,
-          		output: {},
-          		//parent: "node_1_1520357929976",
-          		context: null,
-          		metadata: {},
-          		variable: "$agency",
-          		next_step: null,
-          		conditions: null,
-          		description: null,
-          		//dialog_node: "slot_13_1521220555649",
-          		//previous_sibling: "slot_10_1521220551613"
-          	}, [
-                      node({
-                    		type: "event_handler",
-                    		title: null,
-                    		output: {},
-                    		//parent: "slot_13_1521220555649",
-                    		context: {
-                    			ct: "noise",
-                    			agency: "dep"
-                    		},
-                    		metadata: {},
-                    		next_step: null,
-                    		conditions: "#report-noise && @dep",
-                    		event_name: "input",
-                    		description: null,
-                    		//dialog_node: "handler_14_1521220555649",
-                    		//previous_sibling: "handler_15_1521220555649"
-                    	}),
-                      node({
-                    		type: "event_handler",
-                    		title: null,
-                    		output: {},
-                    		//parent: "slot_13_1521220555649",
-                    		context: null,
-                    		metadata: null,
-                    		next_step: null,
-                    		conditions: null,
-                    		event_name: "focus",
-                    		description: null,
-                    		//dialog_node: "handler_15_1521220555649",
-                    		//previous_sibling: null
-                    	})
-                  ]),
-          node({
-        		type: "slot",
-        		title: null,
-        		output: {},
-        		//parent: "node_1_1520357929976",
-        		context: null,
-        		metadata: {},
-        		variable: "$agency",
-        		next_step: null,
-        		conditions: null,
-        		description: null,
-        		//dialog_node: "slot_22_1521220770556",
-        		//previous_sibling: "slot_13_1521220555649"
-        	}, [
-                      node({
-                    		type: "event_handler",
-                    		title: null,
-                    		output: {},
-                    		//parent: "slot_22_1521220770556",
-                    		context: {
-                    			ct: "noise",
-                    			agency: "nypd"
-                    		},
-                    		metadata: {},
-                    		next_step: null,
-                    		conditions: "#report-noise && @nypd",
-                    		event_name: "input",
-                    		description: null,
-                    		//dialog_node: "handler_23_1521220770556",
-                    		//previous_sibling: "handler_24_1521220770556"
-                    	}),
-                      node({
-                    		type: "event_handler",
-                    		title: null,
-                    		output: {},
-                    		//parent: "slot_22_1521220770556",
-                    		context: null,
-                    		metadata: null,
-                    		next_step: null,
-                    		conditions: null,
-                    		event_name: "focus",
-                    		description: null,
-                    		//dialog_node: "handler_24_1521220770556",
-                    		//previous_sibling: null
-                    	})
-                  ]),
-          node({
         		type: "slot",
         		title: null,
         		output: {},
@@ -394,100 +487,7 @@ const get_issue = () => {
                     		//dialog_node: "handler_4_1520358026402",
                     		//previous_sibling: null
                     	})
-                  ]),
-          node({
-        		type: "slot",
-        		title: null,
-        		output: {},
-        		//parent: "node_1_1520357929976",
-        		context: null,
-        		metadata: {},
-        		variable: "$agency",
-        		next_step: null,
-        		conditions: null,
-        		description: null,
-        		//dialog_node: "slot_10_1521220551613",
-        		//previous_sibling: "slot_4_1521220486223"
-        	}, [
-                        node({
-                      		type: "event_handler",
-                      		title: null,
-                      		output: {},
-                      		//parent: "slot_10_1521220551613",
-                      		context: {
-                      			ct: "graffiti",
-                      			agency: "dsny",
-                      			entity: "@dsny.value"
-                      		},
-                      		metadata: {},
-                      		next_step: null,
-                      		conditions: "#report-graffiti && @dsny",
-                      		event_name: "input",
-                      		description: null,
-                      		//dialog_node: "handler_11_1521220551613",
-                      		//previous_sibling: "handler_12_1521220551613"
-                      	}),
-                        node({
-                      		type: "event_handler",
-                      		title: null,
-                      		output: {},
-                      		//parent: "slot_10_1521220551613",
-                      		context: null,
-                      		metadata: {},
-                      		next_step: null,
-                      		conditions: null,
-                      		event_name: "focus",
-                      		description: null,
-                      		//dialog_node: "handler_12_1521220551613",
-                      		//previous_sibling: null
-                      	})
-                    ]),
-          node({
-        		type: "slot",
-        		title: null,
-        		output: {},
-        		//parent: "node_1_1520357929976",
-        		context: null,
-        		metadata: {},
-        		variable: "$agency",
-        		next_step: null,
-        		conditions: null,
-        		description: null,
-        		//dialog_node: "slot_4_1521220486223",
-        		//previous_sibling: null
-        	}, [
-                        node({
-                      		type: "event_handler",
-                      		title: null,
-                      		output: {},
-                      		//parent: "slot_4_1521220486223",
-                      		context: {
-                      			agency: "dpr",
-                      			entity: "@dpr.value"
-                      		},
-                      		metadata: {},
-                      		next_step: null,
-                      		conditions: "#report-damaged-tree && @dpr",
-                      		event_name: "input",
-                      		description: null,
-                      		//dialog_node: "handler_5_1521220486223",
-                      		//previous_sibling: "handler_6_1521220486223"
-                      	}),
-                        node({
-                      		type: "event_handler",
-                      		title: null,
-                      		output: {},
-                      		//parent: "slot_4_1521220486223",
-                      		context: null,
-                      		metadata: {},
-                      		next_step: null,
-                      		conditions: null,
-                      		event_name: "focus",
-                      		description: null,
-                      		//dialog_node: "handler_6_1521220486223",
-                      		//previous_sibling: null
-                      	})
-                    ])
+                  ])
         ])
   ];
 }
@@ -1460,7 +1460,7 @@ const anything_else = () => {
       {
     		type: "standard",
     		title: "Anything else",
-    		text: ["I didn't understand. You can try rephrasing.", "Can you reword your statement? I'm not understanding.", "I didn't get your meaning."],
+    		text: ["I didn't understand. Can you try rephrasing?"],
     		//parent: null,
     		context: null,
     		metadata: {},
@@ -1509,13 +1509,19 @@ const node = (values, children) => {
   }
 
   if ('text' in values && values['text'] != null) {
-    result['node']['output'] = {
-      text: {
-        values: [ values['text'] ],
-        selection_policy: "sequential"
+    if ('event_name' in values && values['event_name'] == 'focus') {
+      result['node']['output'] = {
+        text: values['text']
+      };
+    } else {
+        result['node']['output'] = {
+          text: {
+            values: [ values['text'] ],
+            selection_policy: "sequential"
+          }
+        };
       }
-    };
-  }
+  };
 
   if ('type' in values && values['type'] != null) {
     result['node']['type'] = values['type'];
