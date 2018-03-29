@@ -538,7 +538,8 @@ const process_issue_confirmation = () => {
                 		title: null,
                 		output: {},
                 		context: {
-                			ct: null
+                			ct: null,
+                      failed_ct: "<? context['failed_ct'] + 1 ?>"
                 		},
                 		metadata: {},
                 		next_step: null,
@@ -1002,13 +1003,6 @@ const get_another_address = () => {
     		type: "standard",
     		title: "get another address",
     		text: "Oops. Let's try that address again. I'll need a street number, street name, and street word.",
-        //TODO - context variables are already reset in confirmation_address node, don't need to do it here
-        context: {
-    				street_name: null,
-    				street_word: null,
-    				street_number: null,
-    				sub_component: null
-    		},
     		metadata: {},
     		next_step: null,
     		conditions: "true",
@@ -1093,7 +1087,8 @@ const confirmation_address = () => {
                 			street_name: null,
                 			street_word: null,
                 			street_number: null,
-                			landmark_address: null
+                			landmark_address: null,
+                      failed_address: "<? context['failed_address'] + 1 ?>"
                 		},
                 		metadata: {},
                 		next_step: null,

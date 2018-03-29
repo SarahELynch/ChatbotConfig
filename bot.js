@@ -48,7 +48,7 @@ const _fields_and_val = {
   'failed_address': 0,
   'c_ct': '',
   'ct': '',
-  'landmark': '',
+  'landmark': null,
   'in_manhattan': false
 };
 
@@ -173,7 +173,7 @@ class Bot extends EventEmitter {
 
       let typing_time = 0;
       let end_chat_time = 500;
-      
+
 
       // break out the {PAUSE:DDDD} stuff here
       // TODO - make this regex more flexible to support 3 digits and 5+ digits
