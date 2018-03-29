@@ -6,7 +6,7 @@ const _intent_phrases = PropertiesReader('./wcs_config/raw/strings/intent_phrase
 const _entity_phrases = PropertiesReader('./wcs_config/raw/strings/entity_phrases');
 const _landmark_phrases = PropertiesReader('wcs_config/raw/strings/landmark_phrases');
 const _landmark_addresses = PropertiesReader('wcs_config/raw/strings/landmark_addresses');
-const _landmark_entities = exportRaw('./wcs_config/raw/entities/landmark');
+
 //allow 2 address failures, maximum
 //(increment failed_address by 1 for rejected address, by 1 for out-of-bounds address, and by 2 for undecipherable address)
 const _address_failure_limit = 2;
@@ -32,6 +32,8 @@ const exportRaw = (path) => {
     return { value: d_array.shift(), synonyms: d_array};
   });
 };
+
+const _landmark_entities = exportRaw('./wcs_config/raw/entities/landmark');
 
 const export_file = (path) => {
   return fs.readFileSync(path).toString().split("\n").filter(line => line.trim() != '');
@@ -1000,7 +1002,8 @@ const get_another_address = () => {
     		type: "standard",
     		title: "get another address",
     		text: "Oops. Let's try that address again. I'll need a street number, street name, and street word.",
-    		context: {
+        //TODO - context variables are already reset in confirmation_address node, don't need to do it here
+        context: {
     				street_name: null,
     				street_word: null,
     				street_number: null,
@@ -1379,7 +1382,6 @@ const exportDialogTree = () => {
 
 module.exports = {
   dialog: exportDialogTree(),
-  _address_uninitialized: _address_uninitialized,
   _address_failure_limit: _address_failure_limit,
   _ct_failure_limit: _ct_failure_limit
 };
