@@ -16,6 +16,7 @@ stdin.on('data', (d) => {
 
 bot.on('ready', () => {
   console.log("info: bot ready");
+  bot.message('', {}, 2);
 });
 
 bot.on('receiveMessage', (message, context) => {

@@ -67,11 +67,10 @@ class Bot extends EventEmitter {
     super();
 
     this._bot_ready = false;
-    //_ny_streets.init()
-    //.then(() => {
+    setTimeout(() => {
       this._bot_ready = true;
       this.emit('ready');
-    //});
+    }, 1000);
   }
 
   // BEWARE - HACKY CODE BELOW - MODIFY AT YOUR OWN PERIL!
@@ -161,9 +160,11 @@ class Bot extends EventEmitter {
       if(resp_loc['found_location']) {
         this.emit('addressFound', resp_loc['found_location']);
       }
+      /*
       if(this.shouldEmitReportFound(resp, context, resp_loc['found_location'])) {
         this.emit('reportFound', context, resp['intents'], resp['entities']);
       }
+      */
 
       // for fun show the bot typing
       if(resp['output']['text'].length > 0) {
@@ -172,6 +173,7 @@ class Bot extends EventEmitter {
 
       let typing_time = 0;
       let end_chat_time = 500;
+      
 
       // break out the {PAUSE:DDDD} stuff here
       // TODO - make this regex more flexible to support 3 digits and 5+ digits
@@ -272,18 +274,8 @@ class Bot extends EventEmitter {
     context['failed_address'] = Math.max(0, context['failed_address']);
 
     // intercept input for an initial pass before we invoke the service or any custom classifiers
-    if(input.trim() == '') {
-      this.handleEmit(null, context, "Hmm, doesn't look like anything to me..");
-    } else if(!this._bot_ready) {
+    if(!this._bot_ready) {
       this.handleEmit(null, context, "Oops, I'm still booting up!");
-    } else if(input.trim() == "I am Ginni") {
-      this.handleEmit(null, context, "( ._. )");
-      setTimeout(() => {
-        this.handleEmit(null, context, "( ._. )>,-[ ]-[ ]");
-        setTimeout(() => {
-          this.handleEmit(null, context, "([ ]_[ ])");
-        }, 1000);
-      }, 1000);
     } else {
       this.preprocess(input, context, log_level)
       .then((resp_loc) => {
