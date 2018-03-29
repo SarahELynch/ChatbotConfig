@@ -52,6 +52,10 @@ module.exports = {
     {
       entity: "sub_component",
       values: exportRaw('./wcs_config/raw/entities/sub_component')
+    },
+    {
+      entity: "sys-number",
+      values: []
     }
   ]
 };
