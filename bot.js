@@ -46,8 +46,8 @@ const _fields_and_val = {
   //'c_cs': '',
   'failed_ct': 0,
   'failed_address': 0,
-  'c_ct': '',
-  'ct': '',
+  'c_ct': null,
+  'ct': null,
   'landmark': null,
   'in_manhattan': false
 };

@@ -513,7 +513,8 @@ const process_issue_confirmation = () => {
                     output: {},
                     context: {
                       c_ct: "$ct",
-                      c_agency: "$agency"
+                      c_agency: "$agency",
+                      failed_ct: "<?context['failed_ct'] - 1 ?>"
                     },
                     metadata: {},
                     next_step: null,
@@ -605,6 +606,27 @@ const confirm_the_issue = () => {
   return result;
 }
 
+const unclassifiable_issue_report = () => {
+  return [
+    node({
+          type: "standard",
+          title: "Unclassifiable Issue Report",
+          text: "Hmm, I was not able to classify that report into a category. Please describe, in a few words, the issue you'd like to report to 311.",
+          context: {
+            failed_ct: "<?context['failed_ct'] + 1?>"
+          },
+          next_step: {
+            behavior: "jump_to",
+            selector: "user_input",
+            dialog_node: "Get Issue"
+          },
+          conditions: "$ct == null",
+          dialog_node: "Unclassifiable Issue Report",
+
+        })
+    ];
+}
+
 const issue_confirmed_need_address = () => {
   return [
     node(
@@ -694,17 +716,52 @@ const get_address = () => {
     		digress_out: "allow_all",
     		digress_out_slots: "not_allowed"
     	}, [
+            // node({
+          	// 	type: "event_handler",
+          	// 	title: null,
+          	// 	text: "I'll need a street number, street name, and a street word (like \"road\", \"st\", \"blvd\", \"way\", etc.). Or, you can give me the name of a Manhattan landmark.",
+          	// 	context: {
+            //     failed_address: "<?context['failed_address'] + 1 ?>"
+            //   },
+            //   context: null,
+          	// 	metadata: {},
+          	// 	next_step: null,
+          	// 	conditions: null,
+          	// 	event_name: "focus",
+          	// 	description: null,
+          	// }),
             node({
-          		type: "event_handler",
-          		title: null,
-          		text: "I'll need a street number, street name, and a street word (like \"road\", \"st\", \"blvd\", \"way\", etc.). Or, you can give me the name of a Manhattan landmark.",
-          		context: null,
-          		metadata: {},
-          		next_step: null,
-          		conditions: null,
-          		event_name: "focus",
-          		description: null,
-          	}),
+              type: "slot",
+              title: null,
+              output: {},
+              context: null,
+              metadata: {},
+              //variable: "$failed_address",
+              variable: null,
+              next_step: null,
+              conditions: null,
+              description: null,
+            }, [
+                    node({
+                      type: "event_handler",
+                      title: null,
+                      output: {},
+                      context: {
+                        $street_number: "failed",
+                        $street_word: "failed",
+                        $street_name: "failed",
+                        $landmark: "failed"
+                      },
+                      metadata: {},
+                      // next_step: {
+                      //   behavior: "jump_to",
+                      //   selector: "condition",
+                      //   dialog_node: "Elicitation Failure"
+                      // },
+                      conditions: "$failed_address >= 4",
+                      event_name: "input"
+                    })
+            ]),
             node({
           		type: "slot",
           		title: null,
@@ -725,7 +782,8 @@ const get_address = () => {
                   			street_name: "placeholder",
                   			street_word: "placeholder",
                   			street_number: "placeholder",
-                  			sub_component: "placeholder"
+                  			sub_component: "placeholder",
+                        failed_address: "<?context['failed_address'] - 3 ?>"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -801,7 +859,8 @@ const get_address = () => {
                   		title: null,
                   		output: {},
                   		context: {
-                  			street_number: "@sys-number"
+                  			street_number: "@sys-number",
+                        failed_address: "<?context['failed_address'] - 1 ?>"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -813,7 +872,9 @@ const get_address = () => {
                   		type: "event_handler",
                   		title: null,
                   		text: "Can I get a street number for that address? Ex: \"55\", \"1\", \"102\", etc.",
-                  		context: null,
+                  		context: {
+                        failed_address: "<?context['failed_address'] + 1 ?>"
+                      },
                   		metadata: null,
                   		next_step: null,
                   		conditions: "true",
@@ -835,7 +896,9 @@ const get_address = () => {
                   		type: "event_handler",
                   		title: null,
                   		text: "Can I get a street number for that address?",
-                  		context: null,
+                  		context: {
+                        failed_address: "<?context['failed_address'] + 1 ?>"
+                      },
                   		metadata: {},
                   		next_step: null,
                   		conditions: null,
@@ -862,7 +925,9 @@ const get_address = () => {
                   		type: "event_handler",
                   		title: null,
                   		text: "Can I get a street name for that address? Ex: \"main\", \"mlk\", \"astor\", \"1st\", \"fifth\", etc.",
-                  		context: null,
+                  		context: {
+                        failed_address: "<?context['failed_address'] + 1 ?>"
+                      },
                   		metadata: null,
                   		next_step: null,
                   		conditions: "true",
@@ -874,7 +939,8 @@ const get_address = () => {
                   		title: null,
                   		output: {},
                   		context: {
-                  			street_name: "@street_name"
+                  			street_name: "@street_name",
+                        failed_address: "<?context['failed_address'] - 1 ?>"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -897,7 +963,9 @@ const get_address = () => {
                   		type: "event_handler",
                   		title: null,
                   		text: "Can I get a street name for that address?",
-                  		context: null,
+                  		context: {
+                        failed_address: "<?context['failed_address'] + 1 ?>"
+                      },
                   		metadata: {},
                   		next_step: null,
                   		conditions: null,
@@ -935,7 +1003,9 @@ const get_address = () => {
                   		type: "event_handler",
                   		title: null,
                   		text: "Can I get a street word for that address? Examples: \"st\", \"rd\", \"avenue\", \"place\", etc.",
-                  		context: null,
+                  		context: {
+                        failed_address: "<?context['failed_address'] + 1 ?>"
+                      },
                   		metadata: null,
                   		next_step: null,
                   		conditions: "true",
@@ -947,7 +1017,8 @@ const get_address = () => {
                   		title: null,
                   		output: {},
                   		context: {
-                  			street_word: "@street_word"
+                  			street_word: "@street_word",
+                        failed_address: "<?context['failed_address'] - 1 ?>"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -959,7 +1030,9 @@ const get_address = () => {
                   		type: "event_handler",
                   		title: null,
                   		text: "Can I get a street word for that address? Ex: \"st\", \"rd\", \"avenue\", \"place\", etc.",
-                  		context: null,
+                  		context: {
+                        failed_address: "<?context['failed_address'] + 1 ?>"
+                      },
                   		metadata: {},
                   		next_step: null,
                   		conditions: null,
@@ -1046,7 +1119,8 @@ const confirmation_address = () => {
                   		title: null,
                   		output: {},
                   		context: {
-                  			address: "$street_number $street_name $street_word"
+                  			address: "$street_number $sub_component $street_name $street_word",
+                        failed_address: "<?conext['failed_address'] - 1?>"
                   		},
                   		metadata: {},
                   		next_step: null,
@@ -1349,6 +1423,8 @@ const exportDialogTree = () => {
     get_issue(),
 
     confirm_the_issue(),
+
+    unclassifiable_issue_report(),
 
     issue_confirmed_need_address(),
 
